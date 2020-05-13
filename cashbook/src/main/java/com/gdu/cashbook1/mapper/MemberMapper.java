@@ -2,9 +2,11 @@ package com.gdu.cashbook1.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.gdu.cashbook1.vo.Member;
+import com.gdu.cashbook1.vo.*;
 @Mapper
 public interface MemberMapper {
 	//회원가입 insert
 	public int insertMember(Member member); 
+	//로그인 select
+	public LoginMember selectLoginMember(LoginMember loginMember);
 }

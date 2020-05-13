@@ -72,41 +72,44 @@
 	<div class="container">
 		<h1>회원가입</h1>
 		<form id="myForm" method="post" action="/addMember">
-			<div>
-				아이디 : 
-				<input id="memberId" type="text" name="memberId">
-				<span id="idHelper"></span>
+			<div >
+				<div class="input-group mb-3">
+					<span class="input-group-text">아이디 :</span>
+					<input id="memberId" type="text" name="memberId" class="form-control-md">
+					<span id="idHelper"></span>
+				</div>
+				
+				<div class="input-group mb-3">
+					<span class="input-group-text">비밀번호 :</span> 
+					<input  id="memberPw" type="password" name="memberPw" class="form-control-md">
+					<span id="pwHelper"></span>
+				</div>
+				<div class="input-group mb-3">
+					<span class="input-group-text">비밀번호 확인 :</span>
+					<input type="password" id="memberPw2" class="form-control-md">
+				</div>
+				<div class="input-group mb-3">
+					<span class="input-group-text">이름 :</span> 
+					<input id="memberName" type="text" name="memberName" class="form-control-md">
+					<span id="nameHelper"></span>
+				</div>
+				<div class="input-group mb-3">
+					<span class="input-group-text">핸드폰 번호 : </span>
+					<input id="memberPhone" type="text" name="memberPhone" class="form-control-md">
+					<span id="phoneHelper"></span>
+				</div>
+				<div class="input-group mb-3">
+					<span class="input-group-text">주소 : </span>
+					<input id="memberAddr" type="text" name="memberAddr" class="form-control-md">
+					<span id="addrHelper"></span>
+				</div>
+				<div class="input-group mb-3">
+					<span class="input-group-text">이메일 : </span>
+					<input id="memberEmail" type="text" name="memberEmail" class="form-control-md">
+					<span id="emailHelper"></span>
+				</div>
 			</div>
-			<div>
-				비밀번호 : 
-				<input  id="memberPw" type="password" name="memberPw">
-				<span id="pwHelper"></span>
-			</div>
-			<div>
-				비밀번호 확인 : 
-				<input type="password" id="memberPw2">
-			</div>
-			<div>
-				이름 : 
-				<input id="memberName" type="text" name="memberName">
-				<span id="nameHelper"></span>
-			</div>
-			<div>
-				핸드폰 번호 : 
-				<input id="memberPhone" type="text" name="memberPhone">
-				<span id="phoneHelper"></span>
-			</div>
-			<div>
-				주소 : 
-				<input id="memberAddr" type="text" name="memberAddr">
-				<span id="addrHelper"></span>
-			</div>
-			<div>
-				이메일 : 
-				<input id="memberEmail" type="text" name="memberEmail">
-				<span id="emailHelper"></span>
-			</div>
-			<button type="button" id="btn">회원가입</button>
+			<button type="button" id="btn" class="btn btn-primary">회원가입</button>
 		</form>
 	</div>
 </body>
