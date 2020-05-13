@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script>
+let helpInit = function(){
+	$("#idHelper").text("");
+	$("#nameHelper").text("");
+	$("#phoneHelper").text("");
+	$("#emailHelper").text("");
+	$("#msg").text("");
+}
+$(document).ready(function(){
+	$("#searchPwBtn").click(function(){
+		if($("#memberId").val().length === 0){
+			helpInit();
+			$("#idHelper").text("id를 입력해주세요");
+			$("#memberId").focus();
+			return;
+		}else if($("#memberName").val().length === 0){
+			helpInit();
+			$("#nameHelper").text("이름을 확인하세요");
+			$("#memberName").focus();
+			return;
+		}else if($("#memberPhone").val().length === 0){
+			helpInit();
+			$("#phoneHelper").text("핸드폰 이름을 확인하세요");
+			$("#memberPhone").focus();
+			return;
+		}else if($("#memberEmail").val().length === 0){
+			helpInit();
+			$("#emailHelper").text("이메일를 확인하세요");
+			$("#memberEmail").focus();
+			return;
+		}
+		$("#searchPwForm").submit();	
+	});
+});
+</script>
+</head>
+<body>
+	<div class="container">
+		<h1 class="text-center">비밀번호 찾기</h1>
+		<!-- 비밀번호 찾기 초기 폼 -->
+		<div th:if="${searchMember == null}">
+			<form id="searchPwForm" method="post" action="/searchMemberPw">
+				<div th:if="${memberId == null}">
+					<div class="input-group mb-3">
+						<span class="input-group-text">아이디 :</span>
+						<input id="memberId" type="text" name="memberId" class="form-control-md">
+						<span id="idHelper"></span>
+					</div>
+				</div>
+				<!--
+				<div th:if="${memberId != null}">
+					<div class="input-group mb-3">
+						<span class="input-group-text">아이디 :</span>
+						<input id="memberId" type="text" name="memberId" th:value="${memberId}" class="form-control-md">
+						<span id="idHelper"></span>
+					</div>
+				</div>
+				-->
+				<div class="input-group mb-3">
+					<span class="input-group-text">이름 :</span>
+					<input id="memberName" type="text" name="memberName" class="form-control-md">
+					<span id="nameHelper"></span>
+				</div>
+				<div class="input-group mb-3">
+					<span class="input-group-text">전화번호 :</span>
+					<input id="memberPhone" type="text" name="memberPhone" class="form-control-md">
+					<span id="phoneHelper"></span>
+				</div>
+				<div class="input-group mb-3">
+					<span class="input-group-text">메일 :</span>
+					<input id="memberEmail" type="text" name="memberEmail" class="form-control-md">
+					<span id="emailHelper"></span>
+				</div>
+				<button id="searchPwBtn" type="button">비밀번호 찾기</button>
+				<span id="msg" th:text="${msg}"></span>
+			</form>
+		</div>
+		<!-- 입력한 정보가 데이터베이스에 저장된 정보와 맞다면 아이디 , 비밀번호 값을 하면에 출력 -->
+		<div th:if="${searchMember != null}">
+			<div class="input-group mb-3">
+				<span class="input-group-text">아이디 :</span>
+				<input type="text" th:value="${searchMember.memberId}" class="form-control-md" readonly="readonly">
+			</div>
+			<div class="input-group mb-3">
+				<span class="input-group-text">비밀번호 :</span>
+				<input type="text" th:value="${searchMember.memberPw}" class="form-control-md" readonly="readonly">
+			</div>
+			<a href="/login">로그인하기</a>
+		</div>	
+	</div>
+</body>
+</html>

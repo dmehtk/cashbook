@@ -45,9 +45,15 @@
 							<label class="font-weight-bold">Password :</label>
 							<input type="password" class="form-control-lg d-flex justify-content-center" name="memberPw" id="memberPw">
 						</div>
+						<div>
+							<span th:text="${msg}"></span>
+						</div>
 						<button type="button" id="btn" class="btn btn-outline-primary font-weight-bold">로그인</button>
 					</form>
 				</div>
+				<br>
+				<a href="/searchMemberId" class="btn btn-primary">아이디 찾기</a>
+				<a href="/searchMemberPw" class="btn btn-primary">비밀번호 찾기</a>
 			</div>
 		</div>
 		<div class="col-md-3"></div>

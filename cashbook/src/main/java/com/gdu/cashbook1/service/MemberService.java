@@ -21,4 +21,16 @@ public class MemberService {
 	public LoginMember login(LoginMember loginMember) {
 		return this.memberMapper.selectLoginMember(loginMember);
 	}
+	//로그인 (중복체크) service
+	public String checkMemberId(String memberIdCheck) {
+		return this.memberMapper.selectMemberId(memberIdCheck);
+	}
+	//아이디 찾기 service
+	public String searchMemberId(String memberEmail) {
+		return this.memberMapper.searchMemberId(memberEmail);
+	}
+	//비밀번호 찾기 service
+	public LoginMember searchMemberPw(Member member) {
+		return this.memberMapper.searchMemberPw(member);
+	}
 }

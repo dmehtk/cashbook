@@ -24,6 +24,12 @@
 		$("#emailHelper").text("");
 	}
 	$(document).ready(function(){
+		$("#idBtn").click(function(){
+			if($("#memberIdCheck").val() === ""){
+				alert("아이디를 입력해주세요")
+			}
+			$("#idForm").submit();
+		});
 		$("#btn").click(function(){
 			
 			if($("#memberId").val().length < 4){
@@ -71,11 +77,19 @@
 <body>
 	<div class="container">
 		<h1>회원가입</h1>
+		<form id="idForm" method="post" action="/CheckMemberId">
+			<div class="input-group mb-3">
+				<span class="input-group-text">아이디 중복확인 :</span>
+				<input id="memberIdCheck" type="text" name="memberIdCheck" class="form-control-md">
+				<button id="idBtn" type="button">중복 체크</button>
+				<span th:text="${msg}"></span>	
+			</div>	
+		</form>
 		<form id="myForm" method="post" action="/addMember">
-			<div >
+			<div>
 				<div class="input-group mb-3">
 					<span class="input-group-text">아이디 :</span>
-					<input id="memberId" type="text" name="memberId" class="form-control-md">
+					<input th:value="${memberId}" id="memberId" type="text" name="memberId" class="form-control-md" readonly="readonly">
 					<span id="idHelper"></span>
 				</div>
 				

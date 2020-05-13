@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script>
+$(document).ready(function(){
+	$("#searchIdBtn").click(function(){
+		if($("#memberEmail").val() === ""){
+			$("#emailHelper").text("");
+			$("#msg").text("");
+			
+			$("#emailHelper").text("내용을 입력해주세요");
+			$("#memberEmail").focus();
+			return;
+		}
+		$("#searchIdForm").submit();
+	});
+});
+</script>
+</head>
+<body>
+	<div class="container">
+		<h1 class="text-center">아이디 찾기</h1>
+		<!-- 아이디 찾기 초기 폼 , 이메일 틀렸거나 빈값을 입력했을 경우 -->
+		<div th:if="${searchId == null}">
+			<form id="searchIdForm" method="post" action="/searchMemberId">
+				<div class="input-group mb-3">
+					<span class="input-group-text">이메일을 입력해주세요 :</span>
+					<input id="memberEmail" type="text" name="memberEmail" class="form-control-md">
+					<button id="searchIdBtn" type="button">아이디 찾기</button>
+					<br><br>
+				</div>
+				<!-- 서로 helper 와 msg 값이 중복으로 사용되지 않기위해 jquery 사용 -->
+				<span id="emailHelper"></span>
+				<span th:text="${msg}" id="msg"></span>
+			</form>	
+		</div>
+		<!-- searchId(아이디 찾기 버튼 클릭 후 아이디값이 넘어온 경우에 ~) -->
+		<div th:if="${searchId != null}">
+			<div class="input-group mb-3">
+				<span class="input-group-text">아이디 :</span>
+				<input th:value="${searchId}" id="memberId" type="text" name="memberId" class="form-control-md">
+				<a href="/searchMemberPw" class="btn btn-primary">비밀번호 찾기</a>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
