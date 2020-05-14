@@ -17,6 +17,17 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService memberService;
+	//회원 정보 폼
+	@GetMapping("/memberInfo")
+	public String memberInfo(HttpSession session, Model model) {
+		if(session.getAttribute("loginMember") == null) {
+			return "redirect:/index";
+		}
+		Member member = this.memberService.getMemberOne((LoginMember)(session.getAttribute("loginMember")));
+		System.out.println(member+"<--member");
+		model.addAttribute("member", member);
+		return "memberInfo";
+	}
 	
 	//비밀번호 찾기 폼
 	@GetMapping("/searchMemberPw")
@@ -118,7 +129,7 @@ public class MemberController {
 		}else { //로그인 성공시
 			session.setAttribute("loginMember", returnLoginMember);
 			System.out.println(returnLoginMember+"<--로그인");
-			return "redirect:/index";
+			return "redirect:/home";
 		}
 	}
 	

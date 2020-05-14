@@ -13,6 +13,10 @@ import com.gdu.cashbook1.vo.Member;
 public class MemberService {
 	@Autowired
 	private MemberMapper memberMapper;
+	//회원정보 service
+	public Member getMemberOne(LoginMember loginMember) {
+		return this.memberMapper.selectMemberOne(loginMember);
+	}
 	//회원가입 service
 	public int insertMember(Member member) {
 		return this.memberMapper.insertMember(member);
