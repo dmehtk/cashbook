@@ -17,10 +17,7 @@
 <script>
 	$(document).ready(function(){
 		$("#btn").click(function(){
-			if($("#memberId").val() === ""){
-				alert("아이디를 입력하세요");
-				return;
-			}else if($("#memberPw").val() === ""){
+			if($("#memberPw").val() === ""){
 				alert("비밀번호를 입력하세요");
 				return;
 			}
@@ -34,27 +31,22 @@
 		<div class="col-md-3"></div>
 		<div class="col-md-6">
 			<div style="padding: 200px;">
-				<h1 class="text-center">로그인</h1>
+				<h1 class="text-center">비밀번호 확인</h1>
 				<div class="d-flex justify-content-center">
-					<form method="post" action="/login" id="loginForm">
+					<form method="post" action="/memberPwConfirm" id="loginForm">
 						<div class="form-group">
 							<label class="font-weight-bold">ID :</label>
-							<input type="text" class="form-control-lg d-flex justify-content-center" name="memberId" id="memberId" value="yusuk">
+							<input type="text" class="form-control-lg d-flex justify-content-center" name="memberId" id="memberId" th:value="${loginMember.memberId}">
 						</div>
 						<div class="form-group">
 							<label class="font-weight-bold">Password :</label>
-							<input type="password" class="form-control-lg d-flex justify-content-center" name="memberPw" id="memberPw" value="1234">
+							<input type="password" class="form-control-lg d-flex justify-content-center" name="memberPw" id="memberPw">
 						</div>
 						<div>
 							<span th:text="${msg}"></span>
 						</div>
-						<button type="button" id="btn" class="btn btn-outline-primary font-weight-bold">로그인</button>
+						<button type="button" id="btn" class="btn btn-outline-primary font-weight-bold">회원 탈퇴</button>
 					</form>
-				</div>
-				<br>
-				<div class="d-flex justify-content-center">
-					<a href="/searchMemberId" class="btn btn-primary">아이디 찾기</a>
-					<a href="/searchMemberPw" class="btn btn-primary">비밀번호 찾기</a>
 				</div>
 			</div>
 		</div>

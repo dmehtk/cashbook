@@ -6,6 +6,8 @@ import com.gdu.cashbook1.vo.*;
 
 @Mapper //mapper 기능 + component 기능
 public interface MemberMapper {
+	//회원 탈퇴 delete
+	public int deleteMember(LoginMember loginMember);
 	//회원 정보 select
 	public Member selectMemberOne(LoginMember loginMember);
 	//회원가입 insert

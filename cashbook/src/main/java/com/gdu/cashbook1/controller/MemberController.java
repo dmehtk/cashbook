@@ -17,6 +17,38 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService memberService;
+	
+	//회원탈퇴 비밀번호 확인 폼
+	@GetMapping("/memberPwConfirm")
+	public String memberPwConfirm(HttpSession session, Model model) {
+		if(session.getAttribute("loginMember") == null) {
+			return "redirect:/index";
+		}
+		//현재 회원의 아이디를 출력하기 위해 값을 보내줌
+		model.addAttribute("loginMember", session.getAttribute("loginMember"));
+		return "memberPwConfirm";
+	}
+	//회원탈퇴 비밀번호 확인 액션
+	@PostMapping("/memberPwConfirm")
+	public String memberPwConfirm(HttpSession session, Model model, LoginMember loginMember) {
+		if(session.getAttribute("loginMember") == null) {
+			return "redirect:/index";
+		}
+		//delete 쿼리 결과를 int 값으로 받음
+		int row = this.memberService.deleteMember(loginMember);
+		System.out.println(row+"<--결과값  0 or 1");
+		//0일시에는 비밀번호가 틀립니다 문구 출력
+		if(row == 0) {
+			model.addAttribute("msg", "비밀번호가 틀립니다");
+			return "memberPwConfirm";
+		//0이 아니라면 index로 복귀
+		}else {
+			System.out.println("회원탈퇴 성공");
+			//남아있는 세션값을 무효화해줌
+			session.invalidate();
+			return "redirect:/index";
+		}
+	}
 	//회원 정보 폼
 	@GetMapping("/memberInfo")
 	public String memberInfo(HttpSession session, Model model) {
