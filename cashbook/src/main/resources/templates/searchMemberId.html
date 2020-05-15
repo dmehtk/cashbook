@@ -39,9 +39,19 @@ $(document).ready(function(){
 				<div class="input-group mb-3">
 					<span class="input-group-text">이메일을 입력해주세요 :</span>
 					<input id="memberEmail" type="text" name="memberEmail" class="form-control-md">
-					<button id="searchIdBtn" type="button">아이디 찾기</button>
-					<br><br>
 				</div>
+				<div class="input-group mb-3">
+					<span class="input-group-text">이름 :</span>
+					<input id="memberName" type="text" name="memberName" class="form-control-md">
+					<span id="nameHelper"></span>
+				</div>
+				<div class="input-group mb-3">
+					<span class="input-group-text">전화번호 :</span>
+					<input id="memberPhone" type="text" name="memberPhone" class="form-control-md">
+					<span id="phoneHelper"></span>
+				</div>
+				<button id="searchIdBtn" type="button">아이디 찾기</button>
+				<br><br>
 				<!-- 서로 helper 와 msg 값이 중복으로 사용되지 않기위해 jquery 사용 -->
 				<span id="emailHelper"></span>
 				<span th:text="${msg}" id="msg"></span>
@@ -52,7 +62,7 @@ $(document).ready(function(){
 			<div class="input-group mb-3">
 				<span class="input-group-text">아이디 :</span>
 				<input th:value="${searchId}" id="memberId" type="text" name="memberId" class="form-control-md">
-				<a href="/searchMemberPw" class="btn btn-primary">비밀번호 찾기</a>
+				<a href="/login" class="btn btn-primary">로그인 화면 이동</a>
 			</div>
 		</div>
 	</div>

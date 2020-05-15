@@ -17,6 +17,32 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService memberService;
+	//회원 정보 수정 폼
+	@GetMapping("/updateMember")
+	public String updateMember(HttpSession session, Model model) {
+		if(session.getAttribute("loginMember") == null) {
+			return "redirect:/index";
+		}
+		Member member = this.memberService.getMemberOne((LoginMember)(session.getAttribute("loginMember")));
+		System.out.println(member+"<--member");
+		model.addAttribute("member", member);
+		return "updateMember";
+	}
+	//회원 정보 수정 액션
+	@PostMapping("/updateMember")
+	public String updateMember(Member member, Model model) {
+		int row = this.memberService.updateMember(member);
+		System.out.println(row+"<---row 값");
+		if(row == 0) {
+			model.addAttribute("msg", "수정된 값이 없습니다.");
+			return "updateMember";
+		}else {
+			return "redirect:/memberInfo";
+		}
+		
+	}
+	
+	
 	
 	//회원탈퇴 비밀번호 확인 폼
 	@GetMapping("/memberPwConfirm")
@@ -28,14 +54,14 @@ public class MemberController {
 		model.addAttribute("loginMember", session.getAttribute("loginMember"));
 		return "memberPwConfirm";
 	}
-	//회원탈퇴 비밀번호 확인 액션
+	//회원탈퇴 비밀번호 확인 액션 + 회원 탈퇴 후 탈퇴한 아이디 추가
 	@PostMapping("/memberPwConfirm")
 	public String memberPwConfirm(HttpSession session, Model model, LoginMember loginMember) {
 		if(session.getAttribute("loginMember") == null) {
 			return "redirect:/index";
 		}
 		//delete 쿼리 결과를 int 값으로 받음
-		int row = this.memberService.deleteMember(loginMember);
+		int row = this.memberService.deleteMemberByinsertMemberid(loginMember);
 		System.out.println(row+"<--결과값  0 or 1");
 		//0일시에는 비밀번호가 틀립니다 문구 출력
 		if(row == 0) {
@@ -72,9 +98,9 @@ public class MemberController {
 		model.addAttribute("memberId", memberId);*/
 		return "searchMemberPw";
 	}
-	//비밀번호 찾기 액션
+	/*비밀번호 찾기 액션
 		@PostMapping("/searchMemberPw")
-		public String searchMemberId(HttpSession session, Model model, Member member) {
+		public String searchMemberPw(HttpSession session, Model model, Member member) {
 			//세션정보 확인 (로그인 상태인지 아닌지)
 			if(session.getAttribute("loginMember") != null) {
 				return "redirect:/index";
@@ -90,7 +116,7 @@ public class MemberController {
 				model.addAttribute("searchMember", searchMember);
 			}
 			return "searchMemberPw";
-		}
+		}*/
 	//아이디 찾기 폼
 	@GetMapping("/searchMemberId")
 	public String searchMemberId(HttpSession session) {
@@ -102,11 +128,11 @@ public class MemberController {
 	
 	//아이디 찾기 액션
 	@PostMapping("/searchMemberId")
-	public String searchMemberId(HttpSession session, Model model,@RequestParam("memberEmail") String memberEmail) {
+	public String searchMemberId(HttpSession session, Model model, Member member) {
 		if(session.getAttribute("loginMember") != null) {
 			return "redirect:/index";
 		}
-		String searchMemberId = this.memberService.searchMemberId(memberEmail);
+		String searchMemberId = this.memberService.searchMemberId(member);
 		if(searchMemberId == null) {
 			System.out.println("아이디 없음");
 			model.addAttribute("msg", "아이디가 없습니다");

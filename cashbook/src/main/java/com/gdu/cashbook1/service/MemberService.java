@@ -13,9 +13,20 @@ import com.gdu.cashbook1.vo.Member;
 public class MemberService {
 	@Autowired
 	private MemberMapper memberMapper;
-	//회원 탈퇴
-	public int deleteMember(LoginMember loginMember) {
-		return this.memberMapper.deleteMember(loginMember);
+	//회원 정보 수정
+	public int updateMember(Member member) {
+		return this.memberMapper.updateMember(member);
+	}
+	//회원 탈퇴후 탈퇴한 아이디 추가 (트랜잭션 처리)
+	public int deleteMemberByinsertMemberid(LoginMember loginMember) {
+		//1.
+		int row = this.memberMapper.deleteMember(loginMember);
+		// 실행된 값에 따라 0반환 혹은 1반환
+		if(row == 0) {
+			return 0;
+		}else {
+			return this.memberMapper.insertMemberid(loginMember);
+		}
 	}
 	//회원정보 service
 	public Member getMemberOne(LoginMember loginMember) {
@@ -34,8 +45,8 @@ public class MemberService {
 		return this.memberMapper.selectMemberId(memberIdCheck);
 	}
 	//아이디 찾기 service
-	public String searchMemberId(String memberEmail) {
-		return this.memberMapper.searchMemberId(memberEmail);
+	public String searchMemberId(Member member) {
+		return this.memberMapper.searchMemberId(member);
 	}
 	//비밀번호 찾기 service
 	public LoginMember searchMemberPw(Member member) {
