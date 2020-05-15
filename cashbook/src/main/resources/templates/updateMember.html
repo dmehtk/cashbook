@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script>
+	$(document).ready(function(){
+		$("#btn").click(function(){
+			$("#memberPwHel").text("");
+			$("#msg").text("");
+			if($("#memberPw").val() != $("#memberPw2").val()){
+				
+				$("#memberPwHel").text("비밀번호가 다릅니다");
+				
+				
+				return;
+			}
+			
+			$("#myForm").submit();
+		});
+	});
+</script>
+</head>
+<body>
+	<div class="container">
+		<h1>회원 정보 수정</h1>
+		<form method="post" action="/updateMember" id="myForm">
+	        <table class="table table-bordered">
+				<tr>
+					<th>아이디 : </th>
+					<td>
+						<input type="text" id="memberId" name="memberId" th:value="${member.memberId}" readonly>
+					</td>
+				</tr>
+				<tr>
+					<th>이름 : </th>
+					<td>
+						<input type="text" id="memberName" name="memberName" th:value="${member.memberName}">
+						<span id="memberNameHel"></span>
+					</td>
+				</tr>
+				<tr>
+					<th>전화번호 : </th>
+					<td>
+						<input type="text" id="memberPhone" name="memberPhone" th:value="${member.memberPhone}">
+						<span id="memberPhoneHel"></span>
+
+					</td>
+				</tr>
+				<tr>
+					<th>주소 : </th>
+					<td>
+						<input type="text" id="memberEmail" name="memberAddr" th:value="${member.memberAddr}">
+						<span id="memberAddrHel"></span>
+
+					</td>
+				</tr>
+				<tr>
+					<th>이메일 : </th>
+					<td>
+						<input type="text" id="memberEmail" name="memberEmail" th:value="${member.memberEmail}">
+						<span id="memberEmailHel"></span>
+					</td>
+				</tr>
+				<tr>
+					<th>비밀번호 : </th>
+					<td>
+						<input type="password" id="memberPw" name="memberPw">
+					</td>
+				</tr>
+				<tr>
+					<th>비밀번호 확인 : </th>
+					<td>
+						<input type="password" id="memberPw2">
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">				
+						<button class="btn btn-outline-primary" type="button" id="btn">수정하기</button>
+					</td>
+				</tr>
+			</table>
+				<span id="memberPwHel"></span>
+				<span th:text="${msg}" id="msg"></span>
+		</form>
+	</div>
+</body>
+</html>
