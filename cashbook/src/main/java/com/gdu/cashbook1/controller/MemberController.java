@@ -3,6 +3,7 @@ package com.gdu.cashbook1.controller;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -98,25 +99,25 @@ public class MemberController {
 		model.addAttribute("memberId", memberId);*/
 		return "searchMemberPw";
 	}
-	/*비밀번호 찾기 액션
-		@PostMapping("/searchMemberPw")
-		public String searchMemberPw(HttpSession session, Model model, Member member) {
-			//세션정보 확인 (로그인 상태인지 아닌지)
-			if(session.getAttribute("loginMember") != null) {
-				return "redirect:/index";
-			}
-			//페이지에 넘길값은 id, pw 이기 때문에 vo.loginMember  를 사용
-			LoginMember searchMember = this.memberService.searchMemberPw(member);
-			if(searchMember == null) {
-				System.out.println("정보가 틀림");
-				model.addAttribute("msg", "회원 정보가 틀립니다");
-			}else {
-				System.out.println("아이디 있음");
-				System.out.println(searchMember.toString());
-				model.addAttribute("searchMember", searchMember);
-			}
-			return "searchMemberPw";
-		}*/
+	//비밀번호 찾기 액션
+	@PostMapping("/searchMemberPw")
+	public String searchMemberPw(HttpSession session, Model model, Member member) {
+		System.out.println(member);
+		//세션정보 확인 (로그인 상태인지 아닌지)
+		if(session.getAttribute("loginMember") != null) {
+			return "redirect:/index";
+		}
+		int row = this.memberService.getMemberPw(member);
+		System.out.println(row+"<---row 값");
+		String msg = "";
+		if(row == 1) {
+			msg = "비밀번호를 입력한 메일로 전송하였습니다";
+		}else {
+			msg = "비밀번호가 틀렸습니다";
+		}
+		model.addAttribute("msg", msg);
+		return "login";
+	}
 	//아이디 찾기 폼
 	@GetMapping("/searchMemberId")
 	public String searchMemberId(HttpSession session) {

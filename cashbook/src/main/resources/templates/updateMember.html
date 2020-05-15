@@ -22,8 +22,6 @@
 			if($("#memberPw").val() != $("#memberPw2").val()){
 				
 				$("#memberPwHel").text("비밀번호가 다릅니다");
-				
-				
 				return;
 			}
 			
@@ -31,8 +29,10 @@
 		});
 	});
 </script>
+<style th:include="/include/menu::css"></style>
 </head>
 <body>
+	<div th:include="/include/menu::sidemenu"></div>
 	<div class="container">
 		<h1>회원 정보 수정</h1>
 		<form method="post" action="/updateMember" id="myForm">

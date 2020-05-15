@@ -22,7 +22,7 @@ public interface MemberMapper {
 	public String selectMemberId(String memberIdCheck);
 	//아이디 찾기 select 
 	public String searchMemberId(Member member);
-	//비밀번호 찾기 select
-	public LoginMember searchMemberPw(Member member);
+	//비밀번호 찾기 update
+	public int updateMemberPw(Member member);
 	
 }

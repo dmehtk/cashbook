@@ -14,16 +14,24 @@
 
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<style th:include="/include/menu::css"></style>
 </head>
 <body>
+<div th:include="/include/menu::sidemenu"></div>
+
 <div class=container>
 	<h1>memberInfo</h1>
-	<div th:include="/include/menu::sidemenu"></div>
 	<div>
 		<a th:href="@{/memberPwConfirm}">회원탈퇴</a>
 		<a th:href="@{/updateMember}">회원수정</a>
 	</div>
 	<table class="table table-striped">
+		<tr>
+			<td>회원 사진</td>
+			<td>
+				<td><img th:src="@{/upload/default.png}" style=" width:100px; height:100px;"></td>
+			</td>
+		</tr>
 		<tr>
 			<td>아이디</td>
 			<td th:text="${member.memberId}"></td>
