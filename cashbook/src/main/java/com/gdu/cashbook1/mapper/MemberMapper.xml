@@ -96,7 +96,8 @@
 	<select id="selectLoginMember" resultType="com.gdu.cashbook1.vo.LoginMember" parameterType="com.gdu.cashbook1.vo.LoginMember">
 		SELECT
 			member_id as memberId,
-			member_pw as memberPw
+			member_pw as memberPw,
+			member_pic as memberPic
 		FROM
 			member
 		WHERE
@@ -111,7 +112,8 @@
 		member_name,
 		member_phone,
 		member_addr,
-		member_email)
+		member_email,
+		member_pic)
 	VALUE 
 		(
 		#{memberId},
@@ -119,7 +121,8 @@
 		#{memberName},
 		#{memberPhone},
 		#{memberAddr},
-		#{memberEmail}
+		#{memberEmail},
+		#{memberPic}
 		);
   </insert>
   

@@ -85,7 +85,12 @@
 				<span th:text="${msg}"></span>	
 			</div>	
 		</form>
-		<form id="myForm" method="post" action="/addMember">
+		<!-- enctype="multipart/form-data" 글자형태가 아닌 바이너리,바이트 형태로 전송 -->
+		<form id="myForm" method="post" action="/addMember" enctype="multipart/form-data">
+			<div>
+				사진:
+				<input type="file" name="memberPic" id=""  >
+			</div>
 			<div>
 				<div class="input-group mb-3">
 					<span class="input-group-text">아이디 :</span>

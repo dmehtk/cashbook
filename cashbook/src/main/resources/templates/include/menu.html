@@ -49,6 +49,7 @@
         list-style:none;
 	}
     li.group {
+    	margin-top: 10px;
         margin-bottom: 3px;
 	}
     li.group div.title {
@@ -87,7 +88,7 @@
 	<div th:fragment="sidemenu">
 		<ul id="navi">
 		<li class="group">
-	       <div> <img th:src="@{/upload/default.png}" style="margin-left:30px;width:80px; height:80px;"></div>
+	       <div><img th:src="@{${'/upload/' + session.loginMember.memberPic}}" style="margin-left:30px;width:80px; height:80px;"></div>
 			<div><span th:text="${session.loginMember.memberId}"></span>님 환영합니다</div>
 			 <ul class="sub">
 				<li><a th:href="@{/home}">홈</a></li>

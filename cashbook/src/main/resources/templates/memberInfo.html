@@ -29,7 +29,7 @@
 		<tr>
 			<td>회원 사진</td>
 			<td>
-				<td><img th:src="@{/upload/default.png}" style=" width:100px; height:100px;"></td>
+				<td><img th:src="@{${'/upload/'+ member.memberPic}}"  style="width:100px; height:100px;"></td>
 			</td>
 		</tr>
 		<tr>

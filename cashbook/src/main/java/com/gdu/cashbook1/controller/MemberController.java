@@ -215,12 +215,14 @@ public class MemberController {
 	
 	//회원가입 액션
 	@PostMapping("/addMember")
-	public String addMember(Member member, HttpSession session) { //commend 객체
+	public String addMember(MemberForm memberForm, HttpSession session) { //commend 객체
 		if(session.getAttribute("loginMember") != null) {
 			return "redirect:/index";
 		}
-		System.out.println(member.toString()); //toString 사용함으로써 내가 쓴 값들을 디버깅확인
-		this.memberService.insertMember(member);
+		System.out.println(memberForm.toString());
+		
+		//System.out.println(member.toString()); //toString 사용함으로써 내가 쓴 값들을 디버깅확인
+		this.memberService.addMember(memberForm);
 		return "redirect:/index";
 	}
 }
