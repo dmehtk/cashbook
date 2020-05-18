@@ -31,8 +31,9 @@ public class MemberController {
 	}
 	//회원 정보 수정 액션
 	@PostMapping("/updateMember")
-	public String updateMember(Member member, Model model) {
-		int row = this.memberService.updateMember(member);
+	public String updateMember(MemberForm memberForm, Model model) {
+		System.out.println(memberForm);
+		int row = this.memberService.updateMember(memberForm);
 		System.out.println(row+"<---row 값");
 		if(row == 0) {
 			model.addAttribute("msg", "수정된 값이 없습니다.");
@@ -220,8 +221,6 @@ public class MemberController {
 			return "redirect:/index";
 		}
 		System.out.println(memberForm.toString());
-		
-		//System.out.println(member.toString()); //toString 사용함으로써 내가 쓴 값들을 디버깅확인
 		this.memberService.addMember(memberForm);
 		return "redirect:/index";
 	}

@@ -6,6 +6,8 @@ import com.gdu.cashbook1.vo.*;
 
 @Mapper //mapper 기능 + component 기능
 public interface MemberMapper {
+	//사진 삭제
+	public String selectMemberPic(String memberId);
 	//회원 정보수정
 	public int updateMember(Member member);
 	//회원 탈퇴후 삭제된 아이디 추가 insert

@@ -1,11 +1,12 @@
 package com.gdu.cashbook1.service;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.UUID;
 
-import javax.management.RuntimeErrorException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -24,12 +25,67 @@ public class MemberService {
 	private MemberMapper memberMapper;
 	@Autowired
 	private JavaMailSender javaMailSender;
+	@Value("D:\\git-cashbook\\cashbook\\src\\main\\resources\\static\\upload\\") // 파일 경로
+	private String path;
 	//회원 정보 수정
-	public int updateMember(Member member) {
-		return this.memberMapper.updateMember(member);
+	public int updateMember(MemberForm memberForm) {
+		
+			//데이터 베이스에 저장된 파일의 이름을 불러옴
+			String memberPic = this.memberMapper.selectMemberPic(memberForm.getMemberId());
+			System.out.println(memberPic+"<---memberPic");
+			// 파일이 있다면 삭제해줌
+			File file = new File(path+memberPic);
+			System.out.println(file+"<---file");
+			//파일 삭제
+			if(file.exists()) { // 파일이 있는지 확인
+				//파일 이름이 default.png (기본값) 이 아니라면 삭제
+				if(file.getName() != "default.png") {
+					file.delete();
+				}
+			}
+			//삭제후 member에 값들을 넣어준다
+			Member member = new Member();
+			member.setMemberId(memberForm.getMemberId());
+			member.setMemberName(memberForm.getMemberName());
+			member.setMemberAddr(memberForm.getMemberAddr());
+			member.setMemberEmail(memberForm.getMemberEmail());
+			member.setMemberPhone(memberForm.getMemberPhone());
+			member.setMemberPw(memberForm.getMemberPw());
+			member.setMemberPic(memberPic);
+			System.out.println(member);
+			// 업데이트문 실행
+			int row = this.memberMapper.updateMember(member);
+			System.out.println(row +"<---row 값");
+			MultipartFile pic = memberForm.getMemberPic();
+			System.out.println(pic +"<--pic ");
+			
+			//삭제 후 파일생성
+			try {
+				pic.transferTo(file);
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		return row;
 	}
 	//회원 탈퇴후 탈퇴한 아이디 추가 (트랜잭션 처리)
 	public int deleteMemberByinsertMemberid(LoginMember loginMember) {
+		
+		//1. 멤버 이미지 파일 삭제
+		//1-1 파일 이름 select member_pic from member
+			String memberPic = this.memberMapper.selectMemberPic(loginMember.getMemberId());
+			System.out.println(memberPic+"<---memberPic");
+		//1-2 파일 삭제
+			File file = new File(path+memberPic);
+			if(file.exists()) { // 파일이 있는지 확인
+				if(file.getName() != "default.png") {
+					file.delete();
+				}
+			}
 		//1.
 		int row = this.memberMapper.deleteMember(loginMember);
 		// 실행된 값에 따라 0반환 혹은 1반환
@@ -41,26 +97,35 @@ public class MemberService {
 	}
 	//회원가입 insert(사진 추가)
 	public int addMember(MemberForm memberForm) {
+			//확장자 필요
+			MultipartFile mf = memberForm.getMemberPic();
+			String memberPic = "";
+			//파일의 풀네임
+			String originName = mf.getOriginalFilename();
+			System.out.println(originName+"<-----originName");
+			/*
+			if(mf.getContentType().equals("image/png") || mf.getContentType().equals("image/jpg")) {
+				// 업로드 
+				
+			}else {
+				// 업로드 실패
+			}*/
+			//파일의 이름이 없으면
+			if(originName.equals("")) {
+				memberPic = "default.png";
+				System.out.println(memberPic +"<---memberForm.getMemberPic() == null 일때 memberPic");
+			//파일의 이름이 있으면
+			}else {
+				// 마지막 .을 찾고
+				int lastIndex = originName.lastIndexOf(".");
+				//.부터 자른다
+				String extension = originName.substring(lastIndex);
+				// id.~ 
+				memberPic = memberForm.getMemberId()+extension;
+				System.out.println(memberPic + "<---memberPic");
+			}
 		
-		MultipartFile mf = memberForm.getMemberPic();
-		//확장자 필요
-		
-		String originName = mf.getOriginalFilename();
-		System.out.println(originName+"<-----originName");
-		/*
-		if(mf.getContentType().equals("image/png") || mf.getContentType().equals("image/jpg")) {
-			// 업로드 
-			
-		}else {
-			// 업로드 실패
-		}*/
-		
-		int lastIndex = originName.lastIndexOf(".");
-		String extension = originName.substring(lastIndex);
-		String memberPic = memberForm.getMemberId()+extension;
-		System.out.println(memberPic + "<---memberPic");
 		//	 db에 저장
-		
 		Member member = new Member();
 		// memberForm -> member
 		member.setMemberId(memberForm.getMemberId());
@@ -73,8 +138,7 @@ public class MemberService {
 		System.out.println(member+"<---member ");
 		int row = this.memberMapper.insertMember(member);
 		//1. 파일 저장
-		String path = "D:\\git-cashbook\\cashbook\\src\\main\\resources\\static\\upload";
-		File file = new File(path+"\\"+memberPic);
+		File file = new File(path+memberPic);
 		try {
 			mf.transferTo(file);
 		} catch (Exception e) {

@@ -22,7 +22,10 @@
 		$("#phoneHelper").text("");
 		$("#addrHelper").text("");
 		$("#emailHelper").text("");
+		$("#picHelper").text("");
 	}
+	
+	
 	$(document).ready(function(){
 		$("#idBtn").click(function(){
 			if($("#memberIdCheck").val() === ""){
@@ -67,9 +70,9 @@
 				$("#emailHelper").text("이메일를 확인하세요");
 				$("#memberEmail").focus();
 				
-			}else{
-				$("#myForm").submit();
 			}
+			
+			$("#myForm").submit();
 		});
 	});
 </script>
@@ -89,7 +92,8 @@
 		<form id="myForm" method="post" action="/addMember" enctype="multipart/form-data">
 			<div>
 				사진:
-				<input type="file" name="memberPic" id=""  >
+				<input type="file" name="memberPic" id="memberPic">
+				<span id="picHelper"></span>
 			</div>
 			<div>
 				<div class="input-group mb-3">
