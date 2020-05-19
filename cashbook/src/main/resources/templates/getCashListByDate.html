@@ -19,8 +19,14 @@
 <body>
 	<div th:include="/include/menu::sidemenu"></div>
 	<div class="container">
-		<h1>2020년 가계부</h1>
-		<h2 th:text="${title}" class="text-center"></h2>
+		<h1 th:text="${year}+'년 가계부'"></h1>
+		
+		<h2 th:text="${day}" class="text-center"></h2>
+		<div>
+			<a th:href="@{/getCashListByDate(day=${day.plusDays(-1)})}">이전</a>
+			<a th:href="@{/getCashListByDate(day=${day.plusDays(1)})}">다음</a>
+		</div>
+		<div></div>
 		<table class="table table-striped">
 			<tr>
 				<td>카테고리</td>
@@ -40,10 +46,13 @@
 				<td th:unless="${list.cashKind} == '지출'"></td>
 				<td th:text="${list.cashPlace}"></td>
 				<td th:text="${list.cashMemo}"></td>
-				<td><a href=""></a>수정</td>
-				<td><a href=""></a>삭제</td>
+				<td><a th:href="@{/updateCash(cashNo=(${list.cashNo})}">수정</a></td>
+				<td><a th:href="@{/removeCash(cashNo=${list.cashNo})}">삭제</a></td>
 			</tr>
 		</table>
+		<div>
+			(수입+지출) 합계:<span th:text="${cashKindSum}"></span>
+		</div>
 		<div>
 			<button type="button" class="btn btn-primary">입력</button>
 		</div>

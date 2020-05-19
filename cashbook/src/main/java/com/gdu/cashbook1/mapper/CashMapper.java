@@ -10,4 +10,6 @@ import com.gdu.cashbook1.vo.Cash;
 public interface CashMapper {
 	//로그인 사용자의 오늘날짜 cash 목록
 	public List<Cash> selectCashListByToday(Cash cash);
+	public int removeCash(int cashNo);
+	public int selectCashKindSum(Cash cash);
 }
