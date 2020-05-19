@@ -14,27 +14,37 @@
 
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<style th:include="/include/menu::css"></style>
 </head>
 <body>
-	<h1>getCashListByDate</h1>
-	<table class="table">
-		<tr>
-			<td>member_id</td>
-			<td>cash_kind</td>
-			<td>category_name</td>
-			<td>cash_price</td>
-			<td>cash_place</td>
-			<td>cash_memo</td>
-		</tr>
-		<!-- thymleaf for문 사용 -->
-		<tr th:each="list : ${cashList}">
-			<td th:text="${list.memberId}"></td>
-			<td th:text="${list.cashKind}"></td>
-			<td th:text="${list.categoryName}"></td>
-			<td th:text="${list.cashPrice}"></td>
-			<td th:text="${list.cashPlace}"></td>
-			<td th:text="${list.cashMemo}"></td>
-		</tr>
-	</table>
+	<div th:include="/include/menu::sidemenu"></div>
+	<div class="container">
+		<h1>2020년 가계부</h1>
+		<h2 th:text="${title}" class="text-center"></h2>
+		<table class="table table-striped">
+			<tr>
+				<td>카테고리</td>
+				<td>수입</td>
+				<td>지출</td>
+				<td>장소</td>
+				<td>메모</td>
+				<td>수정</td>
+				<td>삭제</td>
+			</tr>
+			<!-- thymleaf for문 사용 -->
+			<tr th:each="list : ${cashList}">
+				<td th:text="${list.cashKind}"></td>
+				<td th:text="${list.categoryName}"></td>
+				<td th:text="${list.cashPrice}"></td>
+				<td th:text="${list.cashPlace}"></td>
+				<td th:text="${list.cashMemo}"></td>
+				<td><a href=""></a>수정</td>
+				<td><a href=""></a>삭제</td>
+			</tr>
+		</table>
+		<div>
+			<button type="button" class="btn btn-primary">입력</button>
+		</div>
+	</div>
 </body>
 </html>

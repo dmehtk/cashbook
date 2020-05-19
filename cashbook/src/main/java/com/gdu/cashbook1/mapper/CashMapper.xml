@@ -6,7 +6,6 @@
 	<!-- 오늘 날짜 cash 리스트 -->
 	<select id="selectCashListByToday" resultType="com.gdu.cashbook1.vo.Cash" parameterType="com.gdu.cashbook1.vo.Cash">
 		SELECT
-			member_id as memberId, 
 			cash_kind as cashKind,
 			category_name as categoryName,
 			cash_price as cashPrice,

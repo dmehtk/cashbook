@@ -36,6 +36,10 @@ public class CashController {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String strToday = sdf.format(today);
 		System.out.println(strToday);
+		// 제목 날짜 형식
+		SimpleDateFormat titleDate = new SimpleDateFormat("yyyy년MM월dd일");
+		String titleToday = titleDate.format(today);
+		System.out.println(titleToday);
 		// cash 안에 set으로 값을 넣어줌
 		Cash cash = new Cash();
 		cash.setMemberId(loginMemberId);
@@ -46,6 +50,7 @@ public class CashController {
 		System.out.println(cashList);
 		//페이지로 값을 넘겨줌
 		model.addAttribute("cashList", cashList);
+		model.addAttribute("title", titleToday);
 		
 		
 		return "getCashListByDate";
