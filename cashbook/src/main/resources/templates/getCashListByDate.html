@@ -24,7 +24,7 @@
 		<h2 th:text="${day}" class="text-center"></h2>
 		<div>
 			<a th:href="@{/getCashListByDate(day=${day.plusDays(-1)})}">이전</a>
-			<a th:href="@{/getCashListByDate(day=${day.plusDays(1)})}">다음</a>
+			<a th:href="@{/getCashListByDate(day=${day.plusDays(+1)})}">다음</a>
 		</div>
 		<div></div>
 		<table class="table table-striped">
@@ -40,13 +40,14 @@
 			<!-- thymleaf for문 사용 -->
 			<tr th:each="list : ${cashList}">
 				<td th:text="${list.categoryName}"></td>
+				<!-- 수입일시 앞에 +  지출일시 앞에 -  -->
 				<td th:if="${list.cashKind} == '수입'" th:text="${'+' + list.cashPrice}"></td>
 				<td th:unless="${list.cashKind} == '수입'"></td>
 				<td th:if="${list.cashKind} == '지출'" th:text="${'-' + list.cashPrice}"></td>
 				<td th:unless="${list.cashKind} == '지출'"></td>
 				<td th:text="${list.cashPlace}"></td>
 				<td th:text="${list.cashMemo}"></td>
-				<td><a th:href="@{/updateCash(cashNo=(${list.cashNo})}">수정</a></td>
+				<td><a th:href="@{/updateCash(cashNo=${list.cashNo})}">수정</a></td>
 				<td><a th:href="@{/removeCash(cashNo=${list.cashNo})}">삭제</a></td>
 			</tr>
 		</table>

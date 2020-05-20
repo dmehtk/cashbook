@@ -10,11 +10,29 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.gdu.cashbook1.mapper.CashMapper;
 import com.gdu.cashbook1.vo.Cash;
+import com.gdu.cashbook1.vo.DayAndPrice;
 
 @Service
 @Transactional //하나라도 예외 발생시 전부 취소
 public class CashService {
 	@Autowired private CashMapper cashMapper;
+	//업데이트 폼 service
+	public Cash selectCashOne(int cashNo) {
+		return this.cashMapper.selectCashOne(cashNo);
+	}
+	//업데이트 액션 service
+	public int updateCash(Cash cash) {
+		return this.cashMapper.updateCash(cash);
+	}
+	//날짜에 표기할 수입/지출 계산  service
+	public List<DayAndPrice> getCashAndPriceList(String memberId, int year, int month){
+		Map<String, Object> map = new HashMap<>();
+		map.put("memberId", memberId);
+		map.put("year", year);
+		map.put("month", month);
+		
+		return this.cashMapper.selectDayAndPriceList(map);
+	}
 	//합계 계산
 	//cash 삭제
 	public int removeCash(int cashNo) {

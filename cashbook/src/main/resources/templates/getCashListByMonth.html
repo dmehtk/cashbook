@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	div.gd-left{
+		
+		margin-right:10px;
+		margin-bottom: 10px;
+		border-radius : 5px;
+		float: left;
+		width: 100px; 
+		height: 100px;
+		border: 1px solid #000000;
+	}
+	div.gd-clear{
+		clear:both;
+		margin-left:10px;
+		color : #FF0000;
+		
+	}
+	div.gd-title{
+		height:30px;
+		background-color: gray; 
+	}
+	div gd-full{
+		margin-left: 150px;
+	}
+	.gd-blue{
+		color : blue;
+	}
+	.gd-led{
+		color : red;
+	}
+	</style>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<style th:include="/include/menu::css"></style>
+<style th:include="/include/menu::css"></style>
+</head>
+<body>
+	<div th:include="/include/menu::sidemenu"></div>
+	<div class="container">
+		<h1>월별 가계부 관리</h1>
+		<!-- cDay.get(Calendar.MONTH)+1 -->
+		<h3 th:text="${#temporals.format(day, 'yyyy-MM')}"></h3>
+		<div>
+      		<a th:href="@{/getCashListByMonth(day = ${day.plusMonths(-1)})}" class="prev btn btn-primary">이전</a>
+      		<a th:href="@{/getCashListByMonth(day = ${day.plusMonths(+1)})}" class="next btn btn-primary">다음</a>
+   		</div>
+		<div class="gd-left gd-clear gd-title">일</div>
+		<div class="gd-left gd-title">월</div>
+		<div class="gd-left gd-title">화</div>
+		<div class="gd-left gd-title">수</div>
+		<div class="gd-left gd-title">목</div>
+		<div class="gd-left gd-title">금</div>
+		<div class="gd-left gd-title">토</div>
+		<!-- 5월달 lastDay==31 -->
+		<!-- 그 달의 1~마기막날(lastDay)까지 반복문  + th:class - 줄바꿈--> 
+		<div th:each="i,index : ${#numbers.sequence(1, lastDay+(firstDayOfWeek-1))}"
+		  	 th:class="${index.index % 7} == 0 ? 'gd-clear gd-left': 'gd-left'" > 
+		  	 <!-- 날짜 알려줌 -->
+		  	 <div th:text="${i-(firstDayOfWeek-1)} > 0 ? ${i-(firstDayOfWeek-1)} : ''"></div> 
+		  	 <!-- 날짜안에 수입/지출 금액 표시 (수입 : +blue , 지출 - -red ) -->
+		  	 <div th:each="dp : ${dayAndPriceList}">
+		  	 	<span th:if="${i-(firstDayOfWeek-1)} ==${dp.day}">
+		  	 		<span th:class="${dp.price}>=0 ? 'gd-blue' : 'gd-led'" th:text="${dp.price}"></span>
+		  	 	</span>
+		  	 </div> 
+		</div>
+	</div>
+</body>
+</html>

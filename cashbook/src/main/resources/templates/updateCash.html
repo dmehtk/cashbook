@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div class="container">
+		<h1>2020년 가계부</h1>
+		<h2 class="text-center">수입/지출 수정</h2>
+		<form method="post" action="/updateCash">
+			
+			<table>
+				<tr>
+					<th>번호</th>
+					<td><input type="text" th:value="${cash.cashNo}" name="cashNo" readonly="readonly"></td>
+				</tr>
+				<tr>
+					<th>카테고리</th>
+					<td><input type="text" th:value="${cash.categoryName}" name="categoryName"></td>
+				</tr>
+				<tr>
+					<th>수입/지출</th>
+					<td th:if="${cash.cashKind} == '수입'">
+						<select name="cashKind" >
+							<option th:value="${cash.cashKind}" th:text="${cash.cashKind} +' : 현재 옵션'"></option>
+							<option value='지출'>지출</option>
+						</select>
+					</td>
+					<td th:if="${cash.cashKind} == '지출'">
+						<select name="cashKind" >
+							<option th:value="${cash.cashKind}" th:text="${cash.cashKind} +' : 현재 옵션'"></option>
+							<option value='수입'>수입</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<th>금액</th>
+					<td><input type="text" th:value="${cash.cashPrice}" name="cashPrice"></td>
+				</tr>
+				<tr>
+					<th>장소</th>
+					<td><input type="text" th:value="${cash.cashPlace}" name="cashPlace"></td>
+				</tr>
+				<tr>
+					<th>메모</th>
+					<td>
+						<input type="text" th:value="${cash.cashMemo}" name="cashMemo">
+					</td>
+				</tr>
+			</table>
+			<button type="submit">수정</button>
+		</form>
+	</div>
+</body>
+</html>
