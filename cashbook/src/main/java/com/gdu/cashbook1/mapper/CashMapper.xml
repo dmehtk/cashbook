@@ -3,6 +3,33 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gdu.cashbook1.mapper.CashMapper">
+	<!-- 가계부 입력(select) 폼 category  -->
+	<select id="selectCategory" resultType="com.gdu.cashbook1.vo.Category">
+		SELECT category_name as categoryName
+		FROM category
+	</select>
+	<!-- 가계부 입력(insert) -->
+	<insert id="insertCash" parameterType="com.gdu.cashbook1.vo.Cash">
+		INSERT INTO 
+			cash(
+				member_id ,
+				cash_date ,
+				cash_kind ,
+				category_name,
+				cash_price,
+				cash_place,
+				cash_memo
+			)
+			VALUE(
+				#{memberId},
+				#{cashDate},
+				#{cashKind},
+				#{categoryName},
+				#{cashPrice},
+				#{cashPlace},
+				#{cashMemo}
+			)
+	</insert>
 	<!-- cashUpdate 폼 선택값 불러오기 -->
 	<select id="selectCashOne" parameterType="int" resultType="com.gdu.cashbook1.vo.Cash">
 		SELECT

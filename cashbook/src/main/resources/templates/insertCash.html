@@ -5,13 +5,10 @@
 <title>Insert title here</title>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-
 <!-- jQuery library -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
 <!-- Popper JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <style th:include="/include/menu::css"></style>
@@ -32,51 +29,52 @@
 	<div th:include="/include/menu::sidemenu"></div>
 	<div class="container">
 		<h1>2020년 가계부</h1>
-		<h2 class="text-center">수입/지출 수정</h2>
-		<form method="post" action="/updateCash" id="form">
-			<table class="table table-striped" >
-				<tr>
-					<th>번호</th>
-					<td><input type="text" th:value="${cash.cashNo}" name="cashNo" readonly="readonly"></td>
-				</tr>
+		<h2 class="text-center">수입/지출 입력</h2>
+		<form method="post" action="/insertCash" id="form">
+			<table class="table table-striped">
 				<tr>
 					<th>카테고리</th>
-					<td><input type="text" th:value="${cash.categoryName}" name="categoryName"></td>
+					<td>
+						<select name="categoryName"	>
+							<option th:each="c : ${list}" th:value='${c.categoryName}' th:text="${c.categoryName}"></option>
+						</select>
+					</td>
 				</tr>
 				<tr>
 					<th>수입/지출</th>
-					<td th:if="${cash.cashKind} == '수입'">
+					<td>
 						<select name="cashKind" >
-							<option th:value="${cash.cashKind}" th:text="${cash.cashKind} +' : 현재 옵션'"></option>
+							<option value='수입' >수입</option>
 							<option value='지출'>지출</option>
-						</select>
-					</td>
-					<td th:if="${cash.cashKind} == '지출'">
-						<select name="cashKind" >
-							<option th:value="${cash.cashKind}" th:text="${cash.cashKind} +' : 현재 옵션'"></option>
-							<option value='수입'>수입</option>
 						</select>
 					</td>
 				</tr>
 				<tr>
 					<th>금액</th>
 					<td>
-						<input type="text" th:value="${cash.cashPrice}" name="cashPrice" id="cashPrice">
+						<input type="text" name="cashPrice" id="cashPrice">
 						<span id="priceHel"></span>
 					</td>
+					
 				</tr>
 				<tr>
 					<th>장소</th>
-					<td><input type="text" th:value="${cash.cashPlace}" name="cashPlace"></td>
+					<td><input type="text" name="cashPlace"></td>
 				</tr>
 				<tr>
 					<th>메모</th>
 					<td>
-						<input type="text" th:value="${cash.cashMemo}" name="cashMemo">
+						<input type="text"name="cashMemo">
+					</td>
+				</tr>
+				<tr>
+					<th>입력 날찌</th>
+					<td>
+						<input type="text" name="cashDate" th:value="${day}" readonly="readonly">
 					</td>
 				</tr>
 			</table>
-			<button type="button" class="btn btn-primary" id="btn">수정</button>
+			<button type="button" id="btn">입력</button>
 		</form>
 	</div>
 </body>

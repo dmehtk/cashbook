@@ -17,12 +17,42 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.gdu.cashbook1.service.CashService;
 import com.gdu.cashbook1.vo.Cash;
+import com.gdu.cashbook1.vo.Category;
 import com.gdu.cashbook1.vo.DayAndPrice;
 import com.gdu.cashbook1.vo.LoginMember;
 
 @Controller
 public class CashController {
 	@Autowired private CashService cashService;
+	//수입/지출 입력 폼
+	@GetMapping("/insertCash")
+	public String insertCash(HttpSession session, Model model,  @RequestParam(value="day" , required = false) String day) {
+		System.out.println(day+"<----입력하려는 날짜");
+		if(session.getAttribute("loginMember") == null) {
+	         return "redirect:/index";
+	      }
+		List<Category> list = new ArrayList<Category>();
+		list = this.cashService.selectCategory();
+		System.out.println(list+"<---list");
+		model.addAttribute("day", day);
+		model.addAttribute("list", list);
+		return "insertCash";
+	}
+	//수입/지출  입력 액션
+	@PostMapping("/insertCash")
+	public String insertCash(HttpSession session, Cash cash) {
+		System.out.println(cash);
+		if(session.getAttribute("loginMember") == null) {
+	         return "redirect:/index";
+	      }
+		System.out.println(cash+"<---cash 정보 확인");
+		String memberId = ((LoginMember)session.getAttribute("loginMember")).getMemberId();
+		System.out.println(memberId+"<---memberId");
+		cash.setMemberId(memberId);
+		this.cashService.insertCash(cash);
+		
+		return "redirect:/getCashListByDate";
+	}
 	//캐시 업데이트 폼
 	@GetMapping("/updateCash")
 	public String updateCash(HttpSession session , Model model, @RequestParam(value="cashNo") int cashNo) {
@@ -37,13 +67,15 @@ public class CashController {
 	}
 	//캐시 업데이트 액션
 	@PostMapping("/updateCash")
-	public String updateCash(HttpSession session , Cash cash ) {
+	public String updateCash(HttpSession session ,Model model, Cash cash ) {
 		System.out.println(cash+"<---view 에서 넘어온 cash. ~ 값");
 		if(session.getAttribute("loginMember") == null) {
 	         return "redirect:/index";
 	      }
-		this.cashService.updateCash(cash);
+		int row = this.cashService.updateCash(cash);
+		System.out.println(row+"row값");
 		return "redirect:/getCashListByDate";
+		
 	}
 	//가계부 캘린더 폼
 	@GetMapping("/getCashListByMonth")
@@ -113,7 +145,7 @@ public class CashController {
 		if(day == null) {
 			day = LocalDate.now();
 		}
-		System.out.println(day);
+		System.out.println(day+"<---day getCashListByDate");
 		if(session.getAttribute("loginMember") == null) {
 			return "redirect:index";
 		}

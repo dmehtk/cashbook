@@ -10,12 +10,21 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.gdu.cashbook1.mapper.CashMapper;
 import com.gdu.cashbook1.vo.Cash;
+import com.gdu.cashbook1.vo.Category;
 import com.gdu.cashbook1.vo.DayAndPrice;
 
 @Service
 @Transactional //하나라도 예외 발생시 전부 취소
 public class CashService {
 	@Autowired private CashMapper cashMapper;
+	//수입/지출 폼 (category)
+	public List<Category> selectCategory(){
+		return this.cashMapper.selectCategory();
+	}
+	// 수입/지출 입력 액션
+	public int insertCash(Cash cash) {
+		return this.cashMapper.insertCash(cash);
+	}
 	//업데이트 폼 service
 	public Cash selectCashOne(int cashNo) {
 		return this.cashMapper.selectCashOne(cashNo);

@@ -74,7 +74,7 @@
 		  	 <!-- 날짜안에 수입/지출 금액 표시 (수입 : +blue , 지출 - -red ) -->
 		  	 <div th:each="dp : ${dayAndPriceList}">
 		  	 	<span th:if="${i-(firstDayOfWeek-1)} ==${dp.day}">
-		  	 		<span th:class="${dp.price}>=0 ? 'gd-blue' : 'gd-led'" th:text="${dp.price}"></span>
+		  	 		<span><a th:href="@{/getCashListByDate(day=${day})}" th:class="${dp.price}>=0 ? 'gd-blue' : 'gd-led'" th:text="${dp.price}"></a></span>
 		  	 	</span>
 		  	 </div> 
 		</div>

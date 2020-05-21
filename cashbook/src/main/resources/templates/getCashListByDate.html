@@ -21,7 +21,7 @@
 	<div class="container">
 		<h1 th:text="${year}+'년 가계부'"></h1>
 		
-		<h2 th:text="${day}" class="text-center"></h2>
+		<h2 class="text-center"><a th:href="@{/getCashListByMonth(day=${day})}" th:text="${day}"></a></h2>
 		<div>
 			<a th:href="@{/getCashListByDate(day=${day.plusDays(-1)})}">이전</a>
 			<a th:href="@{/getCashListByDate(day=${day.plusDays(+1)})}">다음</a>
@@ -54,9 +54,9 @@
 		<div>
 			(수입+지출) 합계:<span th:text="${cashKindSum}"></span>
 		</div>
-		<div>
-			<button type="button" class="btn btn-primary">입력</button>
-		</div>
+			<div>
+				<a th:href="@{/insertCash(day=${day})}" class="btn btn-primary">입력</a>
+			</div>
 	</div>
 </body>
 </html>
