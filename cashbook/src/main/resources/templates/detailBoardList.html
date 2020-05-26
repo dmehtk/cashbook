@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<style th:include="/include/menu::css"></style>
+<script>
+	$(document).ready(function(){
+		$("#updateBtn").click(function(){
+			
+			$("#updateForm").submit();
+		});
+
+
+	});
+</script>
+</head>
+<body>
+	<div th:include="/include/menu::sidemenu"></div>
+	<div class="container">
+		<h1 class="text-center">게시물 상세보기</h1>
+		<div class="d-flex ">
+			<a th:if="${boardNo} != ${min}" th:href="@{/detailBoardList(boardNo=${boardNo-1})}" class="btn btn-primary mr-auto">이전</a>
+			<a th:if="${boardNo} != ${totalCount}" th:href="@{/detailBoardList(boardNo=${boardNo+1})}" class="btn btn-primary">다음</a>
+		</div>
+		<br>
+		<form method="post" th:action="@{/detailBoardList}" class="form-group" id="updateForm">
+			<input type="hidden" th:value="${board.boardNo}" name="boardNo">
+			<div>
+				<input type="text" class="form-control" th:value="${board.boardTitle}" name="boardTitle" id="boardTitle">
+				<span th:value="${board.boardTitle}" id="title"></span>
+			</div>
+			<br>
+			<div>
+				<input type="text" class="form-control" th:value="${board.memberId}" name="memberId" readonly="readonly">
+				<input type="text" class="form-control" th:value="${board.boardDate}" name="boardDate" readonly="readonly">
+			</div>
+			<br>
+			<div>
+				<textarea th:text="${board.boardContent}" rows="5" cols="40" class="form-control" name="boardContent"></textarea>
+				<span th:value="${board.boardContent}" id="content"></span>
+			</div>
+		</form>
+		<span id="text"></span>
+		<div class="d-flex justify-content-between">
+			<a th:href="@{/getBoardList}" class="btn btn-primary">목록</a>
+			<div th:if="${member.memberId} == ${board.memberId}">
+				<button type="button" id="updateBtn" class=" btn btn-primary">수정</button>
+				<a th:href="@{/deleteBoard(boardNo=${board.boardNo})}" class="btn btn-primary" id="removeBtn">삭제</a>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

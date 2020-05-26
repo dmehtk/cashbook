@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<style th:include="/include/menu::css"></style>
+</head>
+<body>
+	<div th:include="/include/menu::sidemenu"></div>
+	<div class="container">
+	<h1 class="text-center">게시판</h1>
+		<div class="d-flex ">
+			<a th:if="${currentPage} != 1" th:href="@{/getBoardList(currentPage=${currentPage-1},boardTitle=${boardTitle})}" class="btn btn-primary mr-auto">이전</a>
+			<a th:if="${currentPage} != ${lastPage}" th:href="@{/getBoardList(currentPage=${currentPage+1},boardTitle=${boardTitle})}" class="btn btn-primary">다음</a>
+		</div>
+		<br>
+		<table class="table table-bordered table-striped">
+			<tr>
+				<th>글번호</th>
+				<th>글제목</th>
+				<th>작성자</th>
+				<th>작성날짜</th>
+			</tr>
+			<tr th:each="b : ${list}">
+				<td th:text="${b.boardNo}"></td>
+				<td><a th:href="@{/detailBoardList(boardNo=${b.boardNo})}" th:text="${b.boardTitle}"></a></td>
+				<td th:text="${b.memberId}"></td>
+				<td th:text="${b.boardDate}"></td>
+			</tr>
+		</table>
+		<form method="get" action="/getBoardList" class="d-flex justify-content-center">
+			<input type="text" name="boardTitle" id="boardTitle">
+			<button type="submit" class="btn btn-secondary">검색</button>
+		</form>
+	</div>
+</body>
+</html>

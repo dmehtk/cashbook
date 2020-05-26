@@ -70,11 +70,11 @@
 		<div th:each="i,index : ${#numbers.sequence(1, lastDay+(firstDayOfWeek-1))}"
 		  	 th:class="${index.index % 7} == 0 ? 'gd-clear gd-left': 'gd-left'" > 
 		  	 <!-- 날짜 알려줌 -->
-		  	 <div th:text="${i-(firstDayOfWeek-1)} > 0 ? ${i-(firstDayOfWeek-1)} : ''"></div> 
+		  	 <div><a th:text="${i-(firstDayOfWeek-1)} > 0 ? ${i-(firstDayOfWeek-1)} : ''" th:href="${i-(firstDayOfWeek-1)} > 10 ? @{/getCashListByDate(day=${#temporals.format(day, 'yyyy-MM-')})}+${i-(firstDayOfWeek-1)} : @{/getCashListByDate(day=${#temporals.format(day, 'yyyy-MM-')})}+'0'+${i-(firstDayOfWeek-1)}"></a></div> 
 		  	 <!-- 날짜안에 수입/지출 금액 표시 (수입 : +blue , 지출 - -red ) -->
 		  	 <div th:each="dp : ${dayAndPriceList}">
-		  	 	<span th:if="${i-(firstDayOfWeek-1)} ==${dp.day}">
-		  	 		<span><a th:href="@{/getCashListByDate(day=${day})}" th:class="${dp.price}>=0 ? 'gd-blue' : 'gd-led'" th:text="${dp.price}"></a></span>
+		  	 	<span th:if="${i-(firstDayOfWeek-1)} == ${dp.day}">
+		  	 		<span th:class="${dp.price}>=0 ? 'gd-blue' : 'gd-led'" th:text="${dp.price}"></span>
 		  	 	</span>
 		  	 </div> 
 		</div>
