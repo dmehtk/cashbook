@@ -1,5 +1,7 @@
 package com.gdu.cashbook1.controller;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,30 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService memberService;
+	
+	@GetMapping("/deleteMemberByAdmin")
+	public String deleteMemberByAdmin(HttpSession session,@RequestParam("memberId") String memberId) {
+		this.memberService.deleteMemberByinsertMemberidByAdmin(memberId);
+		return "redirect:/getMemberList";
+	}
+	@GetMapping("/getMemberList")
+	public String getBoardList(HttpSession session, Model model, @RequestParam(value= "currentPage", defaultValue = "1") int currentPage) {
+		if(((LoginMember)session.getAttribute("loginMember")).getMemberLevel() == 0) {
+	         return "redirect:/index";
+	      }
+		System.out.println(currentPage +"<---controller currentPage");
+		int rowPerPage = 5;
+		int beginRow = (currentPage-1)*rowPerPage;
+		System.out.println(beginRow);
+		
+		Map<String, Object> map = this.memberService.selectMemberList(beginRow, rowPerPage);
+		
+		model.addAttribute("list", map.get("list"));
+		model.addAttribute("lastPage", map.get("lastPage"));
+		model.addAttribute("currentPage", currentPage);
+		
+		return "getMemberList";
+	}
 	//회원 정보 수정 폼
 	@GetMapping("/updateMember")
 	public String updateMember(HttpSession session, Model model) {

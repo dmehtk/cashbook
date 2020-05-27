@@ -18,7 +18,13 @@
 <script>
 	$(document).ready(function(){
 		$("#updateBtn").click(function(){
-			
+			if($("#boardTitle").val() == ""){
+				$("#title").text("제목을 입력해주세요")
+				return;
+			}else if($("#boardContent").val() == ""){
+				$("#content").text("내용을 입력해주세요");
+				return;
+			}
 			$("#updateForm").submit();
 		});
 
@@ -31,15 +37,16 @@
 	<div class="container">
 		<h1 class="text-center">게시물 상세보기</h1>
 		<div class="d-flex ">
-			<a th:if="${boardNo} != ${min}" th:href="@{/detailBoardList(boardNo=${boardNo-1})}" class="btn btn-primary mr-auto">이전</a>
-			<a th:if="${boardNo} != ${totalCount}" th:href="@{/detailBoardList(boardNo=${boardNo+1})}" class="btn btn-primary">다음</a>
+			<a th:if="${boardNo} != ${min}" th:href="@{/detailBoardList(boardNo=${pre})}" class="btn btn-primary mr-auto">이전</a>
+			<a th:if="${boardNo} != ${next}" th:href="@{/detailBoardList(boardNo=${next})}" class="btn btn-primary">다음</a>
 		</div>
 		<br>
 		<form method="post" th:action="@{/detailBoardList}" class="form-group" id="updateForm">
 			<input type="hidden" th:value="${board.boardNo}" name="boardNo">
 			<div>
+				<span class="input-group-text">제목</span>
 				<input type="text" class="form-control" th:value="${board.boardTitle}" name="boardTitle" id="boardTitle">
-				<span th:value="${board.boardTitle}" id="title"></span>
+				<span id="title"></span>
 			</div>
 			<br>
 			<div>
@@ -48,11 +55,12 @@
 			</div>
 			<br>
 			<div>
+				<span class="input-group-text">내용</span>
 				<textarea th:text="${board.boardContent}" rows="5" cols="40" class="form-control" name="boardContent"></textarea>
-				<span th:value="${board.boardContent}" id="content"></span>
+				<span id="content"></span>
 			</div>
 		</form>
-		<span id="text"></span>
+		<span id="txt" th:text="${txt}"></span>
 		<div class="d-flex justify-content-between">
 			<a th:href="@{/getBoardList}" class="btn btn-primary">목록</a>
 			<div th:if="${member.memberId} == ${board.memberId}">
@@ -60,7 +68,38 @@
 				<a th:href="@{/deleteBoard(boardNo=${board.boardNo})}" class="btn btn-primary" id="removeBtn">삭제</a>
 			</div>
 		</div>
+		<br>
+		<form method="post" action="/insertComment" class="form-group">
+			<input type="hidden" name="boardNo" th:value="${boardNo}">
+			<div class="input-group mb-3">
+				<textarea rows="5" cols="40" class="form-control" name="commentContent"></textarea>
+				<div class="input-group-append">
+					<button type="submit" class="btn btn-danger">댓글 입력</button>
+				</div>
+			</div>
+		</form>
+		<div>
+			<table class="table table-striped">
+				<tr>
+					<td>작성자</td>
+					<td>내용</td>
+					<td>시간</td>
+					<td>수정</td>
+					<td>삭제</td>
+				</tr>
+				<tr th:each="c : ${list}">
+					<td th:text="${c.memberId}"></td>
+					<td th:text="${c.commentContent}"></td>
+					<td th:text="${c.commentDate}"></td>
+					<td><a th:href="@{/updateComment(commentNo=${c.commentNo})}" th:class="${member.memberId} == ${c.memberId} OR ${member.memberLevel} == 1  ? 'btn btn-primary' : 'btn btn-dark disabled'">수정</a></td>
+					<td><a th:href="@{/deleteComment(commentNo=${c.commentNo},boardNo=${c.boardNo})}" th:class="${member.memberId} == ${c.memberId} OR ${member.memberLevel} == 1 ? 'btn btn-danger' : 'btn btn-dark disabled'">삭제</a></td>
+				</tr>
+			</table>
+			<div class="d-flex">
+				<a th:if="${currentPage} != 1" th:href="@{/detailBoardList(currentPage=${currentPage-1},boardNo=${boardNo})}" class="btn btn-primary mr-auto">이전</a>
+				<a th:if="${currentPage} != ${lastPage}" th:href="@{/detailBoardList(currentPage=${currentPage+1},boardNo=${boardNo})}" class="btn btn-primary">다음</a>
+			</div>
+		</div>
 	</div>
-
 </body>
 </html>

@@ -25,7 +25,6 @@
         background-repeat: no-repeat;
         background-attachment: fixed;
         background-size: cover;
-        position: fixed;
         overflow-y: auto;
         font-family:"맑은 고딕";
     } 
@@ -88,12 +87,20 @@
 	<div th:fragment="sidemenu">
 		<ul id="navi">
 		<li class="group">
-	       <div><img th:src="@{${'/upload/' + session.loginMember.memberPic}}" style="margin-left:30px;width:80px; height:80px;"></div>
-			<div><span th:text="${session.loginMember.memberId}"></span>님 환영합니다</div>
-			 <ul class="sub">
+	       <div><img th:src="@{${'/upload/' + session.loginMember.memberPic}}" style="margin-left:30px;width:100px; height:100px;"></div>
+			<div><span th:if="${session.loginMember.memberLevel} == 0" th:text="${session.loginMember.memberId} + '(일반회원)'"></span></div>
+			<div><span th:if="${session.loginMember.memberLevel} == 1" th:text="${session.loginMember.memberId} + '(관리자)'"></span></div>
+			 <ul class="sub"  th:if="${session.loginMember.memberLevel} == 0">
 				<li><a th:href="@{/home}">홈</a></li>
 				<li><a th:href="@{/memberInfo}">회원정보</a></li>
 				<li><a th:href="@{/getCashListByMonth}">가게부 관리</a></li>
+				<li><a th:href="@{/getBoardList}">게시판</a></li>
+				<li><a th:href="@{/logout}">로그아웃</a></li>
+			</ul>
+			<ul class="sub" th:if="${session.loginMember.memberLevel} == 1">
+				<li><a th:href="@{/home}">홈</a></li>
+				<li><a th:href="@{/memberInfo}">관리자 정보</a></li>
+				<li><a th:href="@{/getMemberList}">회원리스트</a></li>
 				<li><a th:href="@{/getBoardList}">게시판</a></li>
 				<li><a th:href="@{/logout}">로그아웃</a></li>
 			</ul>

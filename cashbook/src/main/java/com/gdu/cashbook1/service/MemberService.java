@@ -2,6 +2,9 @@ package com.gdu.cashbook1.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 
@@ -13,7 +16,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.gdu.cashbook1.mapper.BoardMapper;
+import com.gdu.cashbook1.mapper.CashMapper;
+import com.gdu.cashbook1.mapper.CommentMapper;
 import com.gdu.cashbook1.mapper.MemberMapper;
+import com.gdu.cashbook1.vo.Board;
 import com.gdu.cashbook1.vo.LoginMember;
 import com.gdu.cashbook1.vo.Member;
 import com.gdu.cashbook1.vo.MemberForm;
@@ -25,8 +32,61 @@ public class MemberService {
 	private MemberMapper memberMapper;
 	@Autowired
 	private JavaMailSender javaMailSender;
-	@Value("D:\\git-cashbook\\cashbook\\src\\main\\resources\\static\\upload\\") // 파일 경로
+	@Autowired
+	private BoardMapper boardMapper;
+	@Autowired
+	private CommentMapper commentMapper;
+	@Autowired
+	private CashMapper cashMapper;
+	@Value("D:\\yusuk\\maven.1590371282000\\cashbook\\src\\main\\resources\\static\\upload\\") // 파일 경로
 	private String path;
+	
+	public int deleteMemberByinsertMemberidByAdmin(String memberId) {
+		
+		//1. 멤버 이미지 파일 삭제
+		//1-1 파일 이름 select member_pic from member
+			String memberPic = this.memberMapper.selectMemberPic(memberId);
+			System.out.println(memberPic+"<---memberPic");
+		//1-2 파일 삭제
+			File file = new File(path+memberPic);
+			if(file.exists()) { // 파일이 있는지 확인
+				if(file.getName() != "default.png") {
+					file.delete();
+				}
+			}
+		//1.
+		//카테고리 삭제
+		this.cashMapper.deleteCategoryById(memberId);
+		//캐시삭제
+		this.cashMapper.deleteCashById(memberId);
+		//댓글 삭제
+		this.commentMapper.deleteCommentById(memberId);
+		//게시글 삭제
+		this.boardMapper.deleteBoardById(memberId);
+		this.memberMapper.deleteMemberByAdmint(memberId);
+		//id 추가
+		return this.memberMapper.deleteInsertByAdmint(memberId);
+	}
+	//회원 정보 리스트
+	public Map<String, Object> selectMemberList(int beginRow, int rowPerPage){
+		Map<String, Object> map1 = new HashMap<>();
+		
+		map1.put("beginRow", beginRow);
+		map1.put("rowPerPage", rowPerPage);
+		
+		Map<String, Object> map2 = new HashMap<>();
+		int totalRow = this.memberMapper.selectTotalMember();
+		System.out.println(totalRow +"<----totalRow");
+		int lastPage = totalRow/rowPerPage;
+		if(totalRow%rowPerPage != 0) {
+			lastPage+=1;
+		}
+		System.out.println(lastPage);
+		List<Member> list = this.memberMapper.selectMemberList(beginRow, rowPerPage);
+		map2.put("list", list);
+		map2.put("lastPage", lastPage);
+		return map2;
+	}
 	//회원 정보 수정
 	public int updateMember(MemberForm memberForm) {
 		
@@ -86,7 +146,16 @@ public class MemberService {
 					file.delete();
 				}
 			}
+		String memberId = loginMember.getMemberId();
 		//1.
+		//카테고리 삭제
+		this.cashMapper.deleteCategoryById(memberId);
+		//캐시삭제
+		this.cashMapper.deleteCashById(memberId);
+		//댓글 삭제
+		this.commentMapper.deleteCommentById(memberId);
+		//게시글 삭제
+		this.boardMapper.deleteBoardById(memberId);
 		int row = this.memberMapper.deleteMember(loginMember);
 		// 실행된 값에 따라 0반환 혹은 1반환
 		if(row == 0) {

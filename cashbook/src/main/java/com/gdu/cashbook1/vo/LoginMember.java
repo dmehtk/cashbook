@@ -4,7 +4,7 @@ public class LoginMember { // Member를 접근
 	private String memberId;
 	private String memberPw;
 	private String memberPic;
-	
+	private int memberLevel;
 	public String getMemberId() {
 		return memberId;
 	}
@@ -23,12 +23,18 @@ public class LoginMember { // Member를 접근
 	public void setMemberPic(String memberPic) {
 		this.memberPic = memberPic;
 	}
+	
+	public int getMemberLevel() {
+		return memberLevel;
+	}
+	public void setMemberLevel(int memberLevel) {
+		this.memberLevel = memberLevel;
+	}
 	@Override
 	public String toString() {
-		return "LoginMember [memberId=" + memberId + ", memberPw=" + memberPw + ", memberPic=" + memberPic + "]";
+		return "LoginMember [memberId=" + memberId + ", memberPw=" + memberPw + ", memberPic=" + memberPic
+				+ ", memberLevel=" + memberLevel + "]";
 	}
-	
-	
 	
 	
 }

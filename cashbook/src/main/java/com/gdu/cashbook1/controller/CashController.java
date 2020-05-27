@@ -24,15 +24,32 @@ import com.gdu.cashbook1.vo.LoginMember;
 @Controller
 public class CashController {
 	@Autowired private CashService cashService;
+	@GetMapping("/insertCategory")
+	public String insertCategory(HttpSession session) {
+		if(session.getAttribute("loginMember") == null) {
+	         return "redirect:/index";
+	      }
+		return "insertCategory";
+	}
+	@PostMapping("/insertCategory")
+	public String insertCategory(HttpSession session, @RequestParam(value="categoryName") String categoryName) {
+		String memberId = ((LoginMember)session.getAttribute("loginMember")).getMemberId();
+		Category category = new Category();
+		category.setCategoryName(categoryName);
+		category.setMemberId(memberId);
+		this.cashService.insertCategory(category);
+		return "redirect:/insertCash?memberId="+memberId;
+	}
 	//수입/지출 입력 폼
 	@GetMapping("/insertCash")
-	public String insertCash(HttpSession session, Model model,  @RequestParam(value="day" , required = false) String day) {
+	public String insertCash(HttpSession session, Model model,  @RequestParam(value="day" , required = false) String day, @RequestParam(value="memberId") String memberId) {
 		System.out.println(day+"<----입력하려는 날짜");
+		System.out.println(memberId+"<---memberId");
 		if(session.getAttribute("loginMember") == null) {
 	         return "redirect:/index";
 	      }
 		List<Category> list = new ArrayList<Category>();
-		list = this.cashService.selectCategory();
+		list = this.cashService.selectCategory(memberId);
 		System.out.println(list+"<---list");
 		model.addAttribute("day", day);
 		model.addAttribute("list", list);
@@ -51,7 +68,7 @@ public class CashController {
 		cash.setMemberId(memberId);
 		this.cashService.insertCash(cash);
 		
-		return "redirect:/getCashListByDate";
+		return "redirect:/getCashListByDate?day="+cash.getCashDate();
 	}
 	//캐시 업데이트 폼
 	@GetMapping("/updateCash")

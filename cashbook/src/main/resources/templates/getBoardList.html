@@ -15,6 +15,19 @@
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <style th:include="/include/menu::css"></style>
+<script>
+$(document).ready(function(){
+	$("#btn").click(function(){
+		if($("#boardTitle").val() == ""){
+			$("#title").text("검색어가 없습니다");
+			$("#boardTitle").focus();
+			return;
+		}
+		$("#form").submit();
+	});
+});
+	
+</script>
 </head>
 <body>
 	<div th:include="/include/menu::sidemenu"></div>
@@ -39,9 +52,13 @@
 				<td th:text="${b.boardDate}"></td>
 			</tr>
 		</table>
-		<form method="get" action="/getBoardList" class="d-flex justify-content-center">
+		<div>
+			<a th:href="@{/insertBoard}" class="btn btn-primary">추가하기</a>
+		</div> 
+		<form method="get" action="/getBoardList" class="d-flex justify-content-center" id="form">
 			<input type="text" name="boardTitle" id="boardTitle">
-			<button type="submit" class="btn btn-secondary">검색</button>
+			<button type="button" class="btn btn-secondary" id="btn">검색</button>
+			<span id="title"></span>
 		</form>
 	</div>
 </body>

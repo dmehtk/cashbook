@@ -1,11 +1,20 @@
 package com.gdu.cashbook1.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.gdu.cashbook1.vo.*;
 
 @Mapper //mapper 기능 + component 기능
 public interface MemberMapper {
+	//관리자가 삭제시
+	public int deleteMemberByAdmint(String memberId);
+	public int deleteInsertByAdmint(String memberId);
+	//회원 총합수
+	public int selectTotalMember();
+	//회원 리스트
+	public List<Member> selectMemberList(int beginRow, int rowPerPage);
 	//사진 삭제
 	public String selectMemberPic(String memberId);
 	//회원 정보수정

@@ -3,6 +3,25 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gdu.cashbook1.mapper.MemberMapper">
+	<!-- 회원리스트 페이징 사용 회원 총합수 -->
+	<select id="selectTotalMember" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			member
+	</select>
+	<!-- 회원 리스트 + 페이징 -->
+	<select id="selectMemberList" parameterType="java.util.Map" resultType="com.gdu.cashbook1.vo.Member">
+		SELECT
+		member_id AS memberId,
+		member_name AS memberName,
+		member_phone AS memberPhone,
+		member_addr AS memberAddr,
+		member_email AS memberEmail
+	FROM
+		member
+	LIMIT #{beginRow}, #{rowPerPage}; 
+	</select>
 	<select id="selectMemberPic" parameterType="String" resultType="String">
 		SELECT member_pic
 		FROM member
@@ -32,6 +51,16 @@
 					#{memberId}
 			);
 	</insert>
+	<!-- 회원 탈퇴후 삭제된 아이디 추가 insert -->
+	<insert id="insertMemberidByAdmin" parameterType="String">
+		INSERT INTO
+			memberid(
+					 member_id
+			)
+			VALUE(
+					#{memberId}
+			);
+	</insert>
 	<!-- 회원탈퇴 delete -->
 	<delete id="deleteMember" parameterType="com.gdu.cashbook1.vo.LoginMember">
 		DELETE FROM 
@@ -40,6 +69,12 @@
 			member_id =  #{memberId}
 			AND 
 			member_pw = PASSWORD(#{memberPw})
+	</delete>
+	<delete id="deleteMemberByAdmin" parameterType="String">
+		DELETE FROM 
+			member
+		WHERE 
+			member_id =  #{memberId}
 	</delete>
 	<!-- 회원 정보 불러오기 selectOne -->
 	<select id="selectMemberOne" resultType="com.gdu.cashbook1.vo.Member" parameterType="com.gdu.cashbook1.vo.LoginMember">
@@ -103,7 +138,8 @@
 		SELECT
 			member_id as memberId,
 			member_pw as memberPw,
-			member_pic as memberPic
+			member_pic as memberPic,
+			member_level as memberLevel
 		FROM
 			member
 		WHERE

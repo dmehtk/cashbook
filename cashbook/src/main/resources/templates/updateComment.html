@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script>
+$(document).ready(function(){
+	$("#btn").click(function(){
+		if($("#commentContent").val() == ""){
+			$("#content").text("값을 입력해주세요");
+			return;
+		}
+		$("#form").submit();
+	});
+});
+</script>
+</head>
+<body>
+	<div class="container">
+		<h1>댓글 수정</h1>
+		<br>
+		<form method="post" action="/updateComment" class="form-group" id="form">
+			<input type="hidden" name="commentNo" th:value="${comment.commentNo}">
+			<input type="hidden" name="boardNo" th:value="${comment.boardNo}">
+			<div class="input-group mb-3">
+				<textarea rows="5" cols="40" class="form-control" name="commentContent" th:text="${comment.commentContent}" id="commentContent"></textarea>
+				<div class="input-group-append">
+					<button type="button" class="btn btn-danger" id="btn">댓글 입력</button>
+				</div>
+			</div>
+		</form>
+		<span id="content"></span>
+	</div>
+</body>
+</html>

@@ -55,7 +55,7 @@
 			(수입+지출) 합계:<span th:text="${cashKindSum}"></span>
 		</div>
 			<div>
-				<a th:href="@{/insertCash(day=${day})}" class="btn btn-primary">입력</a>
+				<a th:href="@{/insertCash(day=${day},memberId=${session.loginMember.memberId})}" class="btn btn-primary">입력</a>
 			</div>
 	</div>
 </body>

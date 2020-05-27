@@ -17,9 +17,13 @@ import com.gdu.cashbook1.vo.DayAndPrice;
 @Transactional //하나라도 예외 발생시 전부 취소
 public class CashService {
 	@Autowired private CashMapper cashMapper;
+	//카테고리 추가
+	public int insertCategory(Category category) {
+		return this.cashMapper.insertCategory(category);
+	}
 	//수입/지출 폼 (category)
-	public List<Category> selectCategory(){
-		return this.cashMapper.selectCategory();
+	public List<Category> selectCategory(String memberId){
+		return this.cashMapper.selectCategory(memberId);
 	}
 	// 수입/지출 입력 액션
 	public int insertCash(Cash cash) {

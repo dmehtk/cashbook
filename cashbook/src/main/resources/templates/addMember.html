@@ -79,22 +79,23 @@
 </head>
 <body>
 	<div class="container">
-		<h1>회원가입</h1>
-		<form id="idForm" method="post" action="/CheckMemberId">
+		<h1 class="text-center" style="padding:80px">회원가입</h1>
+		<form id="idForm" method="post" action="/CheckMemberId" style="margin-left:350px;">
 			<div class="input-group mb-3">
 				<span class="input-group-text">아이디 중복확인 :</span>
 				<input id="memberIdCheck" type="text" name="memberIdCheck" class="form-control-md">
-				<button id="idBtn" type="button">중복 체크</button>
+				<button id="idBtn" type="button" class="btn btn-primary">중복 체크</button>
 				<span th:text="${msg}"></span>	
 			</div>	
 		</form>
 		<!-- enctype="multipart/form-data" 글자형태가 아닌 바이너리,바이트 형태로 전송 -->
-		<form id="myForm" method="post" action="/addMember" enctype="multipart/form-data">
+		<form id="myForm" method="post" action="/addMember" enctype="multipart/form-data" style="margin-left:350px;">
 			<div>
 				사진:
 				<input type="file" name="memberPic" id="memberPic">
 				<span id="picHelper"></span>
 			</div>
+			<br>
 			<div>
 				<div class="input-group mb-3">
 					<span class="input-group-text">아이디 :</span>

@@ -11,8 +11,13 @@ import com.gdu.cashbook1.vo.DayAndPrice;
 
 @Mapper
 public interface CashMapper {
+	//회원탈퇴시 카테고리 및 캐시삭제
+	public int deleteCashById(String memberId);
+	public int deleteCategoryById(String memberId);
+	//카테고리 추가 액션
+	public int insertCategory(Category category);
 	//수입/지출 폼 category select
-	public List<Category> selectCategory();
+	public List<Category> selectCategory(String memberId);
 	//수입/지출 입력 액션
 	public int insertCash(Cash cash);
 	//수입/지출 수정 폼 

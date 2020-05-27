@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<style th:include="/include/menu::css"></style>
+<script>
+	$(document).ready(function(){
+		$("#btn").click(function(){
+			if($("#boardTitle").val() == ""){
+				$("#title").text("제목을 입력해주세요");
+				$("#boardTitle").focus();
+				return;
+			}else if($("#boardContent").val() == ""){
+				$("#content").text("내용을 입력해주세요");
+				$("#boardContent").focus();
+				return;
+			}
+			$("#insertForm").submit();
+		})
+	});
+</script>
+</head>
+<body>
+	<div th:include="/include/menu::sidemenu"></div>
+	<div class="container">
+		<h1 class="text-center">게시물 추가</h1>
+		<br>
+		<form method="post" th:action="@{/insertBoard}" class="form-group" id="insertForm">
+			<table class="table table-striped">
+				<tr>
+					<td>아이디</td>
+					<td>
+						<input type="text" class="form-control" name="memberId" th:value="${member.memberId}" readonly="readonly">
+					</td>
+				</tr>
+				<tr>
+					<td>제목</td>
+					<td>
+						<input type="text" class="form-control"  name="boardTitle" id="boardTitle">
+						<span id="title"></span>
+					</td>
+				</tr>
+				<tr>
+					<td>내용</td>
+					<td>
+						<textarea rows="5" cols="40" class="form-control" name="boardContent" id="boardContent"></textarea>
+						<span id="content"></span>
+					</td>
+				</tr>
+			</table>
+			<button type="button" class="btn btn-primary" id="btn">추가하기</button>
+		</form>
+	</div>
+</body>
+</html>

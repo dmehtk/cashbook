@@ -3,6 +3,35 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gdu.cashbook1.mapper.BoardMapper">
+	<!-- 회원 탈퇴시 게시글 삭제 -->
+	<delete id="deleteBoardById" parameterType="String">
+		DELETE FROM
+			board
+		WHERE 
+			member_id=#{memberId}
+	</delete>	
+	<!-- 이전 열넘버를 구하기 -->
+	<select id="preNumberSelect" resultType="int" parameterType="int">
+		 SELECT IFNULL(t.boardNo, #{boardNo})
+      FROM(
+         SELECT  board_no,
+         LAG(board_no) OVER (ORDER BY board_no) AS boardNo
+          FROM    board
+          ORDER BY board_no
+      ) t
+      WHERE board_no = #{boardNo}
+	</select>
+	<!-- 다음 열넘버를 구하기 -->
+	<select id="nextNumberSelect" resultType="int" parameterType="int">
+		 SELECT IFNULL(t.boardNo, #{boardNo})
+      FROM(
+         SELECT  board_no,
+         LEAD(board_no) OVER (ORDER BY board_no) AS boardNo
+          FROM    board
+          ORDER BY board_no
+      ) t
+      WHERE board_no = #{boardNo}
+	</select>
 	<!-- 게시판 상세보기 board_no 최솟값 구하기 -->
 	<select id="minBoardOne" resultType="int">
 		SELECT
@@ -57,7 +86,7 @@
 			board_no = #{boardNo}
 	</select>
 	<!-- 게시판 글 추가 -->
-	<insert id="insertBoard">
+	<insert id="insertBoard" parameterType="com.gdu.cashbook1.vo.Board">
 		INSERT INTO 
 			board(member_id, board_title, board_content, board_date)
 		VALUE 
