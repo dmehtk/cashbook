@@ -63,9 +63,9 @@ public class MemberService {
 		this.commentMapper.deleteCommentById(memberId);
 		//게시글 삭제
 		this.boardMapper.deleteBoardById(memberId);
-		this.memberMapper.deleteMemberByAdmint(memberId);
+		this.memberMapper.deleteMemberByAdmin(memberId);
 		//id 추가
-		return this.memberMapper.deleteInsertByAdmint(memberId);
+		return this.memberMapper.insertMemberidByAdmin(memberId);
 	}
 	//회원 정보 리스트
 	public Map<String, Object> selectMemberList(int beginRow, int rowPerPage){

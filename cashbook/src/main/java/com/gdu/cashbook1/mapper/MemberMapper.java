@@ -9,8 +9,8 @@ import com.gdu.cashbook1.vo.*;
 @Mapper //mapper 기능 + component 기능
 public interface MemberMapper {
 	//관리자가 삭제시
-	public int deleteMemberByAdmint(String memberId);
-	public int deleteInsertByAdmint(String memberId);
+	public int deleteMemberByAdmin(String memberId);
+	public int insertMemberidByAdmin(String memberId);
 	//회원 총합수
 	public int selectTotalMember();
 	//회원 리스트
