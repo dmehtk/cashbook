@@ -25,20 +25,21 @@ import com.gdu.cashbook1.vo.LoginMember;
 public class CashController {
 	@Autowired private CashService cashService;
 	@GetMapping("/insertCategory")
-	public String insertCategory(HttpSession session) {
+	public String insertCategory(HttpSession session, Model model, @RequestParam(value="day" , required = false) String day) {
 		if(session.getAttribute("loginMember") == null) {
 	         return "redirect:/index";
 	      }
+		model.addAttribute("day", day);
 		return "insertCategory";
 	}
 	@PostMapping("/insertCategory")
-	public String insertCategory(HttpSession session, @RequestParam(value="categoryName") String categoryName) {
+	public String insertCategory(HttpSession session, @RequestParam(value="categoryName") String categoryName,  @RequestParam(value="day" , required = false) String day) {
 		String memberId = ((LoginMember)session.getAttribute("loginMember")).getMemberId();
 		Category category = new Category();
 		category.setCategoryName(categoryName);
 		category.setMemberId(memberId);
 		this.cashService.insertCategory(category);
-		return "redirect:/insertCash?memberId="+memberId;
+		return "redirect:/insertCash?memberId="+memberId+"&day="+day;
 	}
 	//수입/지출 입력 폼
 	@GetMapping("/insertCash")

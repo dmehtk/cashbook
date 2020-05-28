@@ -38,7 +38,7 @@
 						<select name="categoryName"	>
 							<option th:each="c : ${list}" th:value='${c.categoryName}' th:text="${c.categoryName}"></option>
 						</select>
-						<a th:href="@{/insertCategory}" class="btn btn-primary">카테고리 추가</a>
+						<a th:href="@{/insertCategory(day=${day})}" class="btn btn-primary">카테고리 추가</a>
 					</td>
 				</tr>
 				<tr>

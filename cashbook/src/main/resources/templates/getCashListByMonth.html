@@ -58,6 +58,7 @@
       		<a th:href="@{/getCashListByMonth(day = ${day.plusMonths(-1)})}" class="prev btn btn-primary">이전</a>
       		<a th:href="@{/getCashListByMonth(day = ${day.plusMonths(+1)})}" class="next btn btn-primary">다음</a>
    		</div>
+   		<br>
 		<div class="gd-left gd-clear gd-title">일</div>
 		<div class="gd-left gd-title">월</div>
 		<div class="gd-left gd-title">화</div>
@@ -77,9 +78,6 @@
 		  	 		<span th:class="${dp.price}>=0 ? 'gd-blue' : 'gd-led'" th:text="${dp.price}"></span>
 		  	 	</span>
 		  	 </div> 
-		</div>
-		<div>
-			(수입+지출) 합계:<span th:text="${}"></span>
 		</div>
 	</div>
 </body>

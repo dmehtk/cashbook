@@ -63,7 +63,7 @@
 		<span id="txt" th:text="${txt}"></span>
 		<div class="d-flex justify-content-between">
 			<a th:href="@{/getBoardList}" class="btn btn-primary">목록</a>
-			<div th:if="${member.memberId} == ${board.memberId}">
+			<div th:if="${member.memberId} == ${board.memberId} OR ${member.memberLevel} == 1">
 				<button type="button" id="updateBtn" class=" btn btn-primary">수정</button>
 				<a th:href="@{/deleteBoard(boardNo=${board.boardNo})}" class="btn btn-primary" id="removeBtn">삭제</a>
 			</div>

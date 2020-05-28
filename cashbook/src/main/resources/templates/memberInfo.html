@@ -22,8 +22,8 @@
 <div class=container>
 	<h1>memberInfo</h1>
 	<div>
-		<a th:if="${member.member}" th:href="@{/memberPwConfirm}">회원탈퇴</a>
-		<a th:href="@{/updateMember}">회원수정</a>
+		<a th:if="${member.memberLevel} == 0" th:href="@{/memberPwConfirm}">회원탈퇴</a>
+		<a th:if="${member.memberLevel} == 0" th:href="@{/updateMember}">회원수정</a>
 	</div>
 	<table class="table table-striped">
 		<tr>

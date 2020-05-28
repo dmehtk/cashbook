@@ -8,6 +8,7 @@ public class Member { //table의 도메인 타입(vo)
 	private String memberPhone;
 	private String memberEmail;
 	private String memberPic;
+	private String memberLevel;
 	
 	
 
@@ -93,14 +94,27 @@ public class Member { //table의 도메인 타입(vo)
 		this.memberPic = memberPic;
 	}
 
+	
+
+	public String getMemberLevel() {
+		return memberLevel;
+	}
+
+
+
+	public void setMemberLevel(String memberLevel) {
+		this.memberLevel = memberLevel;
+	}
+
 
 
 	@Override
 	public String toString() {
 		return "Member [memberId=" + memberId + ", memberPw=" + memberPw + ", memberName=" + memberName
 				+ ", memberAddr=" + memberAddr + ", memberPhone=" + memberPhone + ", memberEmail=" + memberEmail
-				+ ", memberPic=" + memberPic + "]";
+				+ ", memberPic=" + memberPic + ", memberLevel=" + memberLevel + "]";
 	}
+
 	
 	
 }

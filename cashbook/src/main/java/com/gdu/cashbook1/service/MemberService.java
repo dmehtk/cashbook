@@ -38,7 +38,7 @@ public class MemberService {
 	private CommentMapper commentMapper;
 	@Autowired
 	private CashMapper cashMapper;
-	@Value("D:\\yusuk\\maven.1590371282000\\cashbook\\src\\main\\resources\\static\\upload\\") // 파일 경로
+	@Value("D:\\yusuk\\maven.1590625831448\\cashbook\\src\\main\\resources\\static\\upload\\") // 파일 경로
 	private String path;
 	
 	public int deleteMemberByinsertMemberidByAdmin(String memberId) {
