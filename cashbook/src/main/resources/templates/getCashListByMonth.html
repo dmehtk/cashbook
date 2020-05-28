@@ -46,14 +46,16 @@
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <style th:include="/include/menu::css"></style>
-<style th:include="/include/menu::css"></style>
 </head>
 <body>
 	<div th:include="/include/menu::sidemenu"></div>
 	<div class="container">
 		<h1>월별 가계부 관리</h1>
 		<!-- cDay.get(Calendar.MONTH)+1 -->
-		<h3 th:text="${#temporals.format(day, 'yyyy-MM')}"></h3>
+		<h2 style="margin-left:350px;" th:text="${#temporals.format(day, 'MM')+'월 달력'}"></h2>
+		<div>
+			<h3>이번달 총액 : <span th:class="${#strings.substring(totalPrice, 0, 1)} == '-' ? 'gd-led'  : 'gd-blue'" th:text="${totalPrice}"></span></h3>
+		</div>
 		<div>
       		<a th:href="@{/getCashListByMonth(day = ${day.plusMonths(-1)})}" class="prev btn btn-primary">이전</a>
       		<a th:href="@{/getCashListByMonth(day = ${day.plusMonths(+1)})}" class="next btn btn-primary">다음</a>
@@ -79,6 +81,7 @@
 		  	 	</span>
 		  	 </div> 
 		</div>
+		<br>
 	</div>
 </body>
 </html>

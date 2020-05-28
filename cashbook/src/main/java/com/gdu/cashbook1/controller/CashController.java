@@ -123,7 +123,13 @@ public class CashController {
 		      System.out.println(month + "<-- CashController.getCashListByMonth : month");
 		      List<DayAndPrice> dayAndPriceList = cashService.getCashAndPriceList(memberId, year, month);
 		      System.out.println(dayAndPriceList +"<---dayandprice");
-		      
+		      int totalPrice = 0;
+		      for(DayAndPrice dp : dayAndPriceList) {
+		            System.out.println(dp);
+		            totalPrice+=dp.getPrice();
+		            System.out.println(totalPrice+"<-------------------------------------total");
+		      }
+		      model.addAttribute("totalPrice", totalPrice);
 		      // 0. 오늘 LocalDate타입 1. 오늘이 Calendar 무슨달 2. 이번달의 마지막 일 3. 이번달 1일의 요일
 		      model.addAttribute("day", day);
 		      model.addAttribute("dayAndPriceList", dayAndPriceList);
