@@ -64,7 +64,8 @@
 			cash_kind as cashKind,
 			cash_price as cashPrice,
 			cash_place cashPlace,
-			cash_memo as cashMemo
+			cash_memo as cashMemo,
+			cash_date as cashDate
 		FROM
 			cash
 		WHERE

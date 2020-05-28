@@ -42,11 +42,11 @@
 	<!--  게시판 글 토탈수(검색) -->
 	<select id="totalBoardByTitle" resultType="int" parameterType="String">
 		SELECT 
-			COUNT(*)
+			COUNT(board_title)
 		FROM 
 			board
 		WHERE
-			board_title = #{boardTitle}
+			board_title LIKE CONCAT('%',#{boardTitle},'%')
 	</select>
 	<!-- 게시판 글 토탈수 -->
 	<select id="totalBoard" resultType="int">

@@ -92,7 +92,7 @@ public class CashController {
 	      }
 		int row = this.cashService.updateCash(cash);
 		System.out.println(row+"row값");
-		return "redirect:/getCashListByDate";
+		return "redirect:/getCashListByDate?day="+cash.getCashDate();
 		
 	}
 	//가계부 캘린더 폼
