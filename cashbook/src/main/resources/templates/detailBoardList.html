@@ -88,10 +88,14 @@
 					<td>삭제</td>
 				</tr>
 				<tr th:each="c : ${list}">
-					<td th:text="${c.memberId}"></td>
+					<td>
+						<span th:if="${#strings.equals(#strings.substring(c.commentDate,0,10),day)}" class="badge badge-warning">new</span>
+						<label th:text="${c.memberId}"></label>
+					</td>
 					<td th:text="${c.commentContent}"></td>
 					<td th:text="${c.commentDate}"></td>
-					<td><a th:href="@{/updateComment(commentNo=${c.commentNo})}" th:class="${member.memberId} == ${c.memberId} OR ${member.memberLevel} == 1  ? 'btn btn-primary' : 'btn btn-dark disabled'">수정</a></td>
+					<td><a th:href="@{/updateComment(commentNo=${c.commentNo})}"
+					 th:class="${member.memberId} == ${c.memberId} OR ${member.memberLevel} == 1  ? 'btn btn-primary' : 'btn btn-dark disabled'">수정</a></td>
 					<td><a th:href="@{/deleteComment(commentNo=${c.commentNo},boardNo=${c.boardNo})}" th:class="${member.memberId} == ${c.memberId} OR ${member.memberLevel} == 1 ? 'btn btn-danger' : 'btn btn-dark disabled'">삭제</a></td>
 				</tr>
 			</table>

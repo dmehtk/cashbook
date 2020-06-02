@@ -1,5 +1,6 @@
 package com.gdu.cashbook1.controller;
 
+import java.time.LocalDate;
 import java.util.*;
 
 import javax.servlet.http.HttpSession;
@@ -56,7 +57,7 @@ public class BoardController {
 		int rowPerPage = 5;
 		int beginRow = (currentPage-1)*rowPerPage;
 		System.out.println(beginRow);
-		
+		LocalDate day = LocalDate.now();
 		
 		Map<String, Object> map = this.boardService.selectBoardOneByComment(boardNo, beginRow, rowPerPage);
 		//게시글
@@ -79,6 +80,7 @@ public class BoardController {
 		model.addAttribute("lastPage", map.get("lastPage"));
 		//페이지 시작 번호
 		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("day", day);
 		return "detailBoardList";
 	}
 	//게시글 리스트
@@ -87,6 +89,8 @@ public class BoardController {
 		if(session.getAttribute("loginMember") == null) {
 	         return "redirect:/index";
 	      }
+		LocalDate day = LocalDate.now();
+		System.out.println(day+"<----day");
 		System.out.println(boardTitle +"<-- controller 검색값");
 		System.out.println(currentPage +"<---controller currentPage");
 		int rowPerPage = 3;
@@ -99,6 +103,7 @@ public class BoardController {
 		model.addAttribute("lastPage", map.get("lastPage"));
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("boardTitle", boardTitle);
+		model.addAttribute("day", day);
 		
 		return "getBoardList";
 	}
