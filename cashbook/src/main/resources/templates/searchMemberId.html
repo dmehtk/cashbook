@@ -35,7 +35,7 @@ $(document).ready(function(){
 		<h1 class="text-center">아이디 찾기</h1>
 		<!-- 아이디 찾기 초기 폼 , 이메일 틀렸거나 빈값을 입력했을 경우 -->
 		<div th:if="${searchId == null}">
-			<form id="searchIdForm" method="post" action="/searchMemberId">
+			<form id="searchIdForm" method="post" th:action="@{searchMemberId}">
 				<div class="input-group mb-3">
 					<span class="input-group-text">이메일을 입력해주세요 :</span>
 					<input id="memberEmail" type="text" name="memberEmail" class="form-control-md">

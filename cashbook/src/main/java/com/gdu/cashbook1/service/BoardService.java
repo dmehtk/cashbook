@@ -46,11 +46,11 @@ public class BoardService {
 		System.out.println(boardNo+"<--boardNo");
 		//상세보기 출력값
 		Board board = this.boardMapper.selectBoardOne(boardNo);
-		//이전 열 번호
+		/*이전 열 번호
 		int preNumberSelect = this.boardMapper.preNumberSelect(boardNo);
 		//다음 열 번호
 		int nextNumberSelect = this.boardMapper.nextNumberSelect(boardNo);
-		//제일 작은 열 번호
+		//제일 작은 열 번호*/
 		int min = this.boardMapper.minBoardOne();
 		System.out.println(min+"<---min");
 		//댓글 -----
@@ -63,8 +63,8 @@ public class BoardService {
 		Map<String, Object> map2 = new HashMap<>();
 		map2.put("board", board);
 		map2.put("min", min);
-		map2.put("pre", preNumberSelect);
-		map2.put("next", nextNumberSelect);
+		//map2.put("pre", preNumberSelect);
+		//map2.put("next", nextNumberSelect);
 		map2.put("list", list);
 		map2.put("lastPage", commentLastPage);
 		

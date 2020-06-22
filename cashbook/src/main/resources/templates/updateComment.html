@@ -30,7 +30,7 @@ $(document).ready(function(){
 	<div class="container">
 		<h1>댓글 수정</h1>
 		<br>
-		<form method="post" action="/updateComment" class="form-group" id="form">
+		<form method="post" th:action="@{updateComment}" class="form-group" id="form">
 			<input type="hidden" name="commentNo" th:value="${comment.commentNo}">
 			<input type="hidden" name="boardNo" th:value="${comment.boardNo}">
 			<div class="input-group mb-3">

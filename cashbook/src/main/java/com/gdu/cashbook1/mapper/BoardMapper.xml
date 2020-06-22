@@ -6,45 +6,45 @@
 	<!-- 회원 탈퇴시 게시글 삭제 -->
 	<delete id="deleteBoardById" parameterType="String">
 		DELETE FROM
-			board
+			cashbook_board
 		WHERE 
 			member_id=#{memberId}
 	</delete>	
-	<!-- 이전 열넘버를 구하기 -->
+	<!-- 이전 열넘버를 구하기 
 	<select id="preNumberSelect" resultType="int" parameterType="int">
 		 SELECT IFNULL(t.boardNo, #{boardNo})
       FROM(
          SELECT  board_no,
          LAG(board_no) OVER (ORDER BY board_no) AS boardNo
-          FROM    board
+          FROM    cashbook_board
           ORDER BY board_no
       ) t
       WHERE board_no = #{boardNo}
-	</select>
-	<!-- 다음 열넘버를 구하기 -->
+	</select>-->
+	<!-- 다음 열넘버를 구하기 
 	<select id="nextNumberSelect" resultType="int" parameterType="int">
 		 SELECT IFNULL(t.boardNo, #{boardNo})
       FROM(
          SELECT  board_no,
          LEAD(board_no) OVER (ORDER BY board_no) AS boardNo
-          FROM    board
+          FROM    cashbook_board
           ORDER BY board_no
       ) t
       WHERE board_no = #{boardNo}
-	</select>
+	</select>-->
 	<!-- 게시판 상세보기 board_no 최솟값 구하기 -->
 	<select id="minBoardOne" resultType="int">
 		SELECT
 			MIN(board_no)
 		FROM 
-			board
+			cashbook_board
 	</select>
 	<!--  게시판 글 토탈수(검색) -->
 	<select id="totalBoardByTitle" resultType="int" parameterType="String">
 		SELECT 
 			COUNT(board_title)
 		FROM 
-			board
+			cashbook_board
 		WHERE
 			board_title LIKE CONCAT('%',#{boardTitle},'%')
 	</select>
@@ -53,7 +53,7 @@
 		SELECT 
 			COUNT(*)
 		FROM 
-			board
+			cashbook_board
 	</select>
 	<!-- 게시판 리스트 -->
 	<select id="selectBoard" resultType="com.gdu.cashbook1.vo.Board" parameterType="java.util.Map">
@@ -64,7 +64,7 @@
 			board_date AS boardDate,
 			member_id AS memberId
 		FROM 
-			board
+			cashbook_board
 		WHERE
 			board_title LIKE CONCAT('%',#{boardTitle},'%')
 		ORDER BY 
@@ -81,21 +81,21 @@
 			board_date AS boardDate,
 			member_id AS memberId
 		FROM 
-			board
+			cashbook_board
 		WHERE
 			board_no = #{boardNo}
 	</select>
 	<!-- 게시판 글 추가 -->
 	<insert id="insertBoard" parameterType="com.gdu.cashbook1.vo.Board">
 		INSERT INTO 
-			board(member_id, board_title, board_content, board_date)
+			cashbook_board(member_id, board_title, board_content, board_date)
 		VALUE 
 			(#{memberId}, #{boardTitle}, #{boardContent}, NOW());
 	</insert>
 	<!-- 게시판 수정 -->
 	<update id="updateBoard" parameterType="com.gdu.cashbook1.vo.Board">
 		UPDATE 
-			board 
+			cashbook_board 
 		SET
 			board_title = #{boardTitle},
 			board_content = #{boardContent}
@@ -105,7 +105,7 @@
 	<!-- 게시판 삭제 -->
 	<delete id="deleteBoard" parameterType="int">
 		DELETE FROM
-			board
+			cashbook_board
 		WHERE 
 			board_no=#{boardNo}
 	</delete>

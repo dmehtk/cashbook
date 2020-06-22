@@ -36,7 +36,7 @@
 			<div style="padding: 200px;">
 				<h1 class="text-center">로그인</h1>
 				<div class="d-flex justify-content-center">
-					<form method="post" action="/login" id="loginForm">
+					<form method="post" th:action="@{login}" id="loginForm">
 						<div class="form-group">
 							<label class="font-weight-bold">ID :</label>
 							<input type="text" class="form-control-lg d-flex justify-content-center" name="memberId" id="memberId">
@@ -49,9 +49,9 @@
 							<span th:text="${msg}"></span>
 						</div>
 						<div class="d-flex justify-content-center">
-							<a href="/searchMemberId" class="btn btn-primary">아이디 찾기</a>
+							<a th:href="@{searchMemberId}" class="btn btn-primary">아이디 찾기</a>
 							<!-- 이름 ,메일, 전화번호 -->
-							<a href="/searchMemberPw" class="btn btn-primary">비밀번호 찾기</a> 
+							<a th:href="@{searchMemberPw}" class="btn btn-primary">비밀번호 찾기</a> 
 						</div>
 						<br>
 						<button type="button" id="btn" class="btn btn-outline-primary font-weight-bold" style="margin-left:80px;">로그인</button>

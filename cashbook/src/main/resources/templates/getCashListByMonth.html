@@ -57,8 +57,8 @@
 			<h3>이번달 총액 : <span th:class="${#strings.substring(totalPrice, 0, 1)} == '-' ? 'gd-led'  : 'gd-blue'" th:text="${totalPrice}"></span></h3>
 		</div>
 		<div>
-      		<a th:href="@{/getCashListByMonth(day = ${day.plusMonths(-1)})}" class="prev btn btn-primary">이전</a>
-      		<a th:href="@{/getCashListByMonth(day = ${day.plusMonths(+1)})}" class="next btn btn-primary">다음</a>
+      		<a th:href="@{getCashListByMonth(day = ${day.plusMonths(-1)})}" class="prev btn btn-primary">이전</a>
+      		<a th:href="@{getCashListByMonth(day = ${day.plusMonths(+1)})}" class="next btn btn-primary">다음</a>
    		</div>
    		<br>
 		<div class="gd-left gd-clear gd-title">일</div>
@@ -74,7 +74,7 @@
 		  	 th:class="${index.index % 7} == 0 ? 'gd-clear gd-left': 'gd-left'" > 
 		  	 <!-- 날짜 알려줌 -->
 		  	 <div><a th:text="${i-(firstDayOfWeek-1)} > 0 ? ${i-(firstDayOfWeek-1)} : ''" 
-		  	 		th:href="${i-(firstDayOfWeek-1)} > 10 ? @{/getCashListByDate(day=${#temporals.format(day, 'yyyy-MM-')})}+${i-(firstDayOfWeek-1)} : @{/getCashListByDate(day=${#temporals.format(day, 'yyyy-MM-')})}+'0'+${i-(firstDayOfWeek-1)}"
+		  	 		th:href="${i-(firstDayOfWeek-1)} > 10 ? @{getCashListByDate(day=${#temporals.format(day, 'yyyy-MM-')})}+${i-(firstDayOfWeek-1)} : @{getCashListByDate(day=${#temporals.format(day, 'yyyy-MM-')})}+'0'+${i-(firstDayOfWeek-1)}"
 		  	 		style="color: black;"></a>
 		  	 </div> 
 		  	 <!-- 날짜안에 수입/지출 금액 표시 (수입 : +blue , 지출 - -red ) -->

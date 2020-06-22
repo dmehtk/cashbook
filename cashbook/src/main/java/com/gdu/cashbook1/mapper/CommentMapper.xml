@@ -7,7 +7,7 @@
 	<delete id="deleteCommentByBoard" parameterType="int">
 		DELETE
 		FROM
-			comment
+			cashbook_comment
 		WHERE
 			board_no=#{boardNo}
 	</delete>
@@ -15,20 +15,20 @@
 	<delete id="deleteCommentById" parameterType="String">
 		DELETE
 		FROM
-			comment
+			cashbook_comment
 		WHERE
 			member_id=#{memberId}
 	</delete>
 	<delete id="deleteComment" parameterType="int">
 		DELETE
 		FROM
-			comment
+			cashbook_comment
 		WHERE
 			comment_no=#{commentNo}
 	</delete>
 	<update id="updateComment" parameterType="com.gdu.cashbook1.vo.Comment">
 		UPDATE 
-			comment
+			cashbook_comment
 		SET
 			comment_content=#{commentContent} , comment_date=NOW()
 		WHERE
@@ -42,7 +42,7 @@
 			comment_content commentContent, 
 			comment_date commentDate
 		FROM 
-			comment
+			cashbook_comment
 		WHERE
 			comment_no = #{commentNo}
 	</select>
@@ -54,7 +54,7 @@
 			comment_content commentContent, 
 			comment_date commentDate
 		FROM 
-			comment
+			cashbook_comment
 		WHERE
 			board_no = #{boardNo}
 		ORDER BY 
@@ -66,13 +66,13 @@
 		SELECT
 			COUNT(*)
 		FROM 
-			comment
+			cashbook_comment
 		WHERE
 			board_no = #{boardNo}
 	</select>
 	<insert id="insertComment" parameterType="com.gdu.cashbook1.vo.Comment">
 		INSERT INTO 
-			comment(member_id, 
+			cashbook_comment(member_id, 
 					board_no, 
 					comment_content, 
 					comment_date)

@@ -64,9 +64,9 @@ public class BoardController {
 		//게시글 출력값
 		model.addAttribute("board", map.get("board"));
 		//다음 열번호
-		model.addAttribute("next", map.get("next"));
+		//model.addAttribute("next", map.get("next"));
 		//이전 열 번호
-		model.addAttribute("pre", map.get("pre"));
+		//model.addAttribute("pre", map.get("pre"));
 		//현재 로그인한 아이디
 		model.addAttribute("member", session.getAttribute("loginMember"));
 		//이전 , 다음 비교할 현재 게시글 번호

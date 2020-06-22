@@ -35,7 +35,7 @@
 	<div th:include="/include/menu::sidemenu"></div>
 	<div class="container">
 		<h1>회원 정보 수정</h1>
-		<form method="post" action="/updateMember" id="myForm" enctype="multipart/form-data">
+		<form method="post" th:action="@{updateMember}" id="myForm" enctype="multipart/form-data">
 	        <table class="table table-bordered">
 	        	<tr>
 					<th>사진 : </th>

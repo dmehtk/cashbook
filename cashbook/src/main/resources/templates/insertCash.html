@@ -30,7 +30,7 @@
 	<div class="container">
 		<h1>2020년 가계부</h1>
 		<h2 class="text-center">수입/지출 입력</h2>
-		<form method="post" action="/insertCash" id="form">
+		<form method="post" th:action="@{insertCash}" id="form">
 			<table class="table table-striped">
 				<tr>
 					<th>카테고리</th>
@@ -38,7 +38,7 @@
 						<select name="categoryName"	>
 							<option th:each="c : ${list}" th:value='${c.categoryName}' th:text="${c.categoryName}"></option>
 						</select>
-						<a th:href="@{/insertCategory(day=${day})}" class="btn btn-primary">카테고리 추가</a>
+						<a th:href="@{insertCategory(day=${day})}" class="btn btn-primary">카테고리 추가</a>
 					</td>
 				</tr>
 				<tr>

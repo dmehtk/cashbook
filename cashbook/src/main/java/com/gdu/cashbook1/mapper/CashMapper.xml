@@ -6,21 +6,21 @@
 	<!-- 회원 탈퇴시 가계부 삭제 -->
 	<delete id="deleteCashById" parameterType="String">
 		DELETE FROM
-			cash
+			cashbook_cash
 		WHERE
 			member_id=#{memberId}
 	</delete>
 	<!-- 회원 탈퇴시카테고리 삭제 -->
 	<delete id="deleteCategoryById" parameterType="String">
 		DELETE FROM
-			category
+			cashbook_category
 		WHERE
 			member_id=#{memberId}
 	</delete>
 	<!-- 카테고리 추가 -->
 	<insert id="insertCategory" parameterType="com.gdu.cashbook1.vo.Category">
 		INSERT INTO
-			category(
+			cashbook_category(
 				category_name,
 				member_id
 			)VALUES(
@@ -31,13 +31,13 @@
 	<!-- 가계부 입력(select) 폼 category  -->
 	<select id="selectCategory" resultType="com.gdu.cashbook1.vo.Category" parameterType="String">
 		SELECT category_name as categoryName
-		FROM category
+		FROM cashbook_category
 		WHERE member_id= #{memberId}
 	</select>
 	<!-- 가계부 입력(insert) -->
 	<insert id="insertCash" parameterType="com.gdu.cashbook1.vo.Cash">
 		INSERT INTO 
-			cash(
+			cashbook_cash(
 				member_id ,
 				cash_date ,
 				cash_kind ,
@@ -67,14 +67,14 @@
 			cash_memo as cashMemo,
 			cash_date as cashDate
 		FROM
-			cash
+			cashbook_cash
 		WHERE
 			cash_no = #{cashNo}
 	</select>
 	<!-- cashUpdate 액션 -->
 	<update id="updateCash" parameterType="com.gdu.cashbook1.vo.Cash">
 		UPDATE 
-			cash 
+			cashbook_cash 
 		SET
 			 category_name = #{categoryName},
 			 cash_kind = #{cashKind},
@@ -89,7 +89,7 @@
 		SELECT DAY(cash_date) AS day, 
 			   SUM(CASE WHEN cash_kind = '수입' THEN cash_price
 			   	   		WHEN cash_kind = '지출' THEN -cash_price END) as price
-		FROM cash
+		FROM cashbook_cash
 		WHERE member_id = #{memberId} 
 		AND YEAR(cash_date) = #{year}
 		AND MONTH(cash_Date) = #{month}
@@ -99,13 +99,13 @@
 	<select id="selectCashKindSum" resultType="int" parameterType="com.gdu.cashbook1.vo.Cash">
 		SELECT
          (SELECT IFNULL(SUM(cash_price) ,'0')
-          FROM cash
+          FROM cashbook_cash
           WHERE member_id = #{memberId} 
           AND   cash_kind = '수입'
           AND   cash_date = #{cashDate})
          -
          (SELECT IFNULL(SUM(cash_price) ,'0') 
-          FROM cash
+          FROM cashbook_cash
           WHERE member_id = #{memberId}
           AND   cash_kind = '지출'
           AND   cash_date = #{cashDate})
@@ -121,7 +121,7 @@
 			cash_place as cashPlace,
 			cash_memo as cashMemo
 		FROM
-			cash
+			cashbook_cash
 		WHERE
 			member_id = #{memberId}
 		AND
@@ -132,7 +132,7 @@
 	<!-- cash delete -->
 	<delete id="removeCash" parameterType="int">
 		DELETE FROM 
-			cash
+			cashbook_cash
 		WHERE
 			cash_no=#{cashNo}
 	</delete>

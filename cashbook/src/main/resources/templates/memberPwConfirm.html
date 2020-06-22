@@ -33,7 +33,7 @@
 			<div style="padding: 200px;">
 				<h1 class="text-center">비밀번호 확인</h1>
 				<div class="d-flex justify-content-center">
-					<form method="post" action="/memberPwConfirm" id="loginForm">
+					<form method="post" th:action="@{memberPwConfirm}" id="loginForm">
 						<div class="form-group">
 							<label class="font-weight-bold">ID :</label>
 							<input type="text" class="form-control-lg d-flex justify-content-center" name="memberId" id="memberId" th:value="${loginMember.memberId}">

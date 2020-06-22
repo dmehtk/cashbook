@@ -21,10 +21,10 @@
 	<div class="container">
 		<h1 th:text="${year}+'년 가계부'"></h1>
 		
-		<h2 class="text-center"><a th:href="@{/getCashListByMonth(day=${day})}" th:text="${day}"></a></h2>
+		<h2 class="text-center"><a th:href="@{getCashListByMonth(day=${day})}" th:text="${day}"></a></h2>
 		<div>
-			<a th:href="@{/getCashListByDate(day=${day.plusDays(-1)})}">이전</a>
-			<a th:href="@{/getCashListByDate(day=${day.plusDays(+1)})}">다음</a>
+			<a th:href="@{getCashListByDate(day=${day.plusDays(-1)})}">이전</a>
+			<a th:href="@{getCashListByDate(day=${day.plusDays(+1)})}">다음</a>
 		</div>
 		<div></div>
 		<table class="table table-striped">
@@ -47,15 +47,15 @@
 				<td th:unless="${list.cashKind} == '지출'"></td>
 				<td th:text="${list.cashPlace}"></td>
 				<td th:text="${list.cashMemo}"></td>
-				<td><a th:href="@{/updateCash(cashNo=${list.cashNo})}">수정</a></td>
-				<td><a th:href="@{/removeCash(cashNo=${list.cashNo})}">삭제</a></td>
+				<td><a th:href="@{updateCash(cashNo=${list.cashNo})}">수정</a></td>
+				<td><a th:href="@{removeCash(cashNo=${list.cashNo})}">삭제</a></td>
 			</tr>
 		</table>
 		<div>
 			(수입+지출) 합계:<span th:text="${cashKindSum}"></span>
 		</div>
 			<div>
-				<a th:href="@{/insertCash(day=${day},memberId=${session.loginMember.memberId})}" class="btn btn-primary">입력</a>
+				<a th:href="@{insertCash(day=${day},memberId=${session.loginMember.memberId})}" class="btn btn-primary">입력</a>
 			</div>
 	</div>
 </body>
